@@ -1,0 +1,167 @@
+{
+  "title": "Q2 2024 Business Performance Report",
+  "footer": "Confidential - Internal Use Only",
+  "logoUrl": "https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany",
+  "generatedAt": "2025-11-30T14:34:59.723458Z",
+  "sections": [
+    {
+      "title": "Key Metrics",
+      "columns": 4,
+      "elements": [
+        {
+          "type": "NumberTile",
+          "id": "68d064f406024cd8972f73163e7763f9",
+          "title": "Total Revenue",
+          "value": 432000,
+          "format": "C0",
+          "subtitle": null,
+          "formattedValue": "$432,000"
+        },
+        {
+          "type": "NumberTile",
+          "id": "f680917cb69e43b0bc2a2569620e493b",
+          "title": "New Customers",
+          "value": 47,
+          "format": "N0",
+          "subtitle": null,
+          "formattedValue": "47"
+        },
+        {
+          "type": "NumberTile",
+          "id": "921b26b6d28d46508a3b307433e2f3a4",
+          "title": "Growth Rate",
+          "value": 0.198,
+          "format": "P1",
+          "subtitle": "\u2191 vs Q1",
+          "formattedValue": "19.8%"
+        },
+        {
+          "type": "NumberTile",
+          "id": "d3f79b0282374d97b908ba3e8994918f",
+          "title": "Customer Satisfaction",
+          "value": 4.7,
+          "format": "N1",
+          "subtitle": "out of 5.0",
+          "formattedValue": "4.7"
+        }
+      ]
+    },
+    {
+      "title": "Revenue Analysis",
+      "columns": 2,
+      "elements": [
+        {
+          "type": "BarChart",
+          "id": "a544fa9b045149d9a2b8b88191d94915",
+          "title": "Revenue by Region",
+          "data": {
+            "North America": 125000,
+            "Europe": 98000,
+            "Asia Pacific": 142000,
+            "Latin America": 67000
+          },
+          "isHorizontal": false
+        },
+        {
+          "type": "LineChart",
+          "id": "2cc9a302f7034adb85342688994f4643",
+          "title": "Monthly Revenue Trend",
+          "series": {
+            "Monthly Revenue Trend": {
+              "January": 45000,
+              "February": 52000,
+              "March": 48000,
+              "April": 55000,
+              "May": 61000,
+              "June": 58000
+            }
+          },
+          "showPoints": true
+        }
+      ]
+    },
+    {
+      "title": "Product \u0026 Growth",
+      "columns": 2,
+      "elements": [
+        {
+          "type": "PieChart",
+          "id": "076c444d028d4d99a01f4599f3e06032",
+          "title": "Product Mix (%)",
+          "data": {
+            "Enterprise": 45,
+            "Professional": 30,
+            "Starter": 25
+          },
+          "isDonut": true
+        },
+        {
+          "type": "StackedBarChart",
+          "id": "7cc79e6780f644e88634d7df77f19038",
+          "title": "Quarterly Performance",
+          "data": {
+            "Q1": {
+              "Revenue": 145000,
+              "Costs": 95000
+            },
+            "Q2": {
+              "Revenue": 174000,
+              "Costs": 102000
+            }
+          },
+          "isHorizontal": false
+        }
+      ]
+    },
+    {
+      "title": "Top Customers",
+      "columns": 1,
+      "elements": [
+        {
+          "type": "Table",
+          "id": "75abd365292d4630bc6218811f8801ac",
+          "title": "Q2 Top Revenue Contributors",
+          "columns": [
+            "Customer",
+            "Revenue",
+            "Status"
+          ],
+          "rows": [
+            {
+              "Customer": "Acme Corp",
+              "Revenue": 45000,
+              "Status": "Active"
+            },
+            {
+              "Customer": "TechStart Inc",
+              "Revenue": 38000,
+              "Status": "Active"
+            },
+            {
+              "Customer": "Global Solutions",
+              "Revenue": 35000,
+              "Status": "Active"
+            },
+            {
+              "Customer": "Innovation Labs",
+              "Revenue": 28000,
+              "Status": "Pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Summary",
+      "columns": 1,
+      "elements": [
+        {
+          "type": "FreeText",
+          "id": "e6b5e8bd76b241dc894d4486b9d68464",
+          "content": "Q2 2024 showed strong performance across all regions with total revenue of $432,000,\nrepresenting a 19.8% increase over Q1. Asia Pacific continues to be our strongest market,\nwhile Latin America presents significant growth opportunities.\n\nThe Enterprise product tier dominates our revenue mix at 45%, indicating strong traction\nin the high-value segment. Customer satisfaction remains high at 4.7/5.0.\n\nKey focus areas for Q3:\n\u2022 Expand sales team in Latin America\n\u2022 Launch new features for Professional tier\n\u2022 Increase customer retention initiatives",
+          "isHtml": false
+        }
+      ]
+    }
+  ]
+}

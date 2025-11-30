@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q2 2024 Business Performance Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+
+        :root {
+            --primary-color: #059669;
+            --secondary-color: #6366f1;
+            --background-color: #ffffff;
+            --text-color: #111827;
+            --font-family: Georgia, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: #f8fafc;
+            padding: 2rem;
+        }
+
+        .report-header {
+            background-color: var(--background-color);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .report-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .logo {
+            max-height: 60px;
+            max-width: 200px;
+        }
+
+        .report-content {
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr !important; }
+        }
+
+        .element {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .number-tile {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .tile-title {
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .tile-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .tile-subtitle {
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+        }
+
+        .free-text {
+            line-height: 1.6;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .table-container h3 {
+            font-size: 1.125rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--background-color);
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .chart-container {
+            padding: 1rem;
+        }
+
+        .chart-container h3 {
+            font-size: 1.125rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .chart-container canvas {
+            max-height: 300px;
+        }
+
+        .report-footer {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+
+        .timestamp {
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <img src="https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany" alt="Logo" class="logo">
+        <h1>Q2 2024 Business Performance Report</h1>
+    </div>
+    <div class="report-content">
+    <div class="section">
+        <h2>Key Metrics</h2>
+        <div class="grid grid-cols-4">
+            <div class="element">
+                <div class="number-tile">
+                    <div class="tile-title">Total Revenue</div>
+                    <div class="tile-value">$432,000</div>
+                </div>
+            </div>
+            <div class="element">
+                <div class="number-tile">
+                    <div class="tile-title">New Customers</div>
+                    <div class="tile-value">47</div>
+                </div>
+            </div>
+            <div class="element">
+                <div class="number-tile">
+                    <div class="tile-title">Growth Rate</div>
+                    <div class="tile-value">19.8%</div>
+                    <div class="tile-subtitle">↑ vs Q1</div>
+                </div>
+            </div>
+            <div class="element">
+                <div class="number-tile">
+                    <div class="tile-title">Customer Satisfaction</div>
+                    <div class="tile-value">4.7</div>
+                    <div class="tile-subtitle">out of 5.0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Revenue Analysis</h2>
+        <div class="grid grid-cols-2">
+            <div class="element">
+                <div class="chart-container">
+                    <h3>Revenue by Region</h3>
+                    <canvas id="chart-a544fa9b045149d9a2b8b88191d94915"></canvas>
+                </div>
+                <script>
+                    new Chart(document.getElementById('chart-a544fa9b045149d9a2b8b88191d94915'), {
+                        type: 'bar',
+                        data: {
+                            labels: ["North America", "Europe", "Asia Pacific", "Latin America"],
+                            datasets: [{
+                                data: [125000, 98000, 142000, 67000],
+                                backgroundColor: 'rgba(37, 99, 235, 0.7)',
+                                borderColor: 'rgba(37, 99, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'x',
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+                </script>
+            </div>
+            <div class="element">
+                <div class="chart-container">
+                    <h3>Monthly Revenue Trend</h3>
+                    <canvas id="chart-2cc9a302f7034adb85342688994f4643"></canvas>
+                </div>
+                <script>
+                    new Chart(document.getElementById('chart-2cc9a302f7034adb85342688994f4643'), {
+                        type: 'line',
+                        data: {
+                            labels: ["April", "February", "January", "June", "March", "May"],
+                            datasets: [
+                                {
+                                    label: "Monthly Revenue Trend",
+                                    data: [55000, 52000, 45000, 58000, 48000, 61000],
+                                    borderColor: 'rgba(37, 99, 235, 1)',
+                                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                                    tension: 0.1,
+                                    pointRadius: 3
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Product &amp; Growth</h2>
+        <div class="grid grid-cols-2">
+            <div class="element">
+                <div class="chart-container">
+                    <h3>Product Mix (%)</h3>
+                    <canvas id="chart-076c444d028d4d99a01f4599f3e06032"></canvas>
+                </div>
+                <script>
+                    new Chart(document.getElementById('chart-076c444d028d4d99a01f4599f3e06032'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: ["Enterprise", "Professional", "Starter"],
+                            datasets: [{
+                                data: [45, 30, 25],
+                                backgroundColor: [
+                                    'rgba(37, 99, 235, 0.7)',
+                                    'rgba(100, 116, 139, 0.7)',
+                                    'rgba(239, 68, 68, 0.7)',
+                                    'rgba(34, 197, 94, 0.7)',
+                                    'rgba(251, 191, 36, 0.7)',
+                                    'rgba(168, 85, 247, 0.7)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true
+                        }
+                    });
+                </script>
+            </div>
+            <div class="element">
+                <div class="chart-container">
+                    <h3>Quarterly Performance</h3>
+                    <canvas id="chart-7cc79e6780f644e88634d7df77f19038"></canvas>
+                </div>
+                <script>
+                    new Chart(document.getElementById('chart-7cc79e6780f644e88634d7df77f19038'), {
+                        type: 'bar',
+                        data: {
+                            labels: ["Q1", "Q2"],
+                            datasets: [
+                                {
+                                    label: "Revenue",
+                                    data: [145000, 174000],
+                                    backgroundColor: 'rgba(37, 99, 235, 0.7)'
+                                },
+                                {
+                                    label: "Costs",
+                                    data: [95000, 102000],
+                                    backgroundColor: 'rgba(100, 116, 139, 0.7)'
+                                }
+                            ]
+                        },
+                        options: {
+                            indexAxis: 'x',
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            scales: { x: { stacked: true }, y: { stacked: true } }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Top Customers</h2>
+        <div class="grid grid-cols-1">
+            <div class="element">
+                <div class="table-container">
+                    <h3>Q2 Top Revenue Contributors</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Revenue</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Acme Corp</td>
+                                <td>45000</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>TechStart Inc</td>
+                                <td>38000</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>Global Solutions</td>
+                                <td>35000</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>Innovation Labs</td>
+                                <td>28000</td>
+                                <td>Pending</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Summary</h2>
+        <div class="grid grid-cols-1">
+            <div class="element">
+                <div class="free-text">
+                    <p>Q2 2024 showed strong performance across all regions with total revenue of $432,000,
+representing a 19.8% increase over Q1. Asia Pacific continues to be our strongest market,
+while Latin America presents significant growth opportunities.
+
+The Enterprise product tier dominates our revenue mix at 45%, indicating strong traction
+in the high-value segment. Customer satisfaction remains high at 4.7/5.0.
+
+Key focus areas for Q3:
+• Expand sales team in Latin America
+• Launch new features for Professional tier
+• Increase customer retention initiatives</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="report-footer">
+        <p>Confidential - Internal Use Only</p>
+        <p class="timestamp">Generated: 2025-11-30 14:34:59 UTC</p>
+    </div>
+</body>
+</html>
