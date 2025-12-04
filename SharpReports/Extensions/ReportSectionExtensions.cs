@@ -18,6 +18,22 @@ public static class ReportSectionExtensions
     }
 
     /// <summary>
+    /// Adds a date tile to the section
+    /// </summary>
+    public static ReportSection AddDateTile(this ReportSection section, string title, DateTime value, string? format = null, string? subtitle = null)
+    {
+        return section.AddElement(new DateTile(title, value, format, subtitle));
+    }
+
+    /// <summary>
+    /// Adds a date tile to the section
+    /// </summary>
+    public static ReportSection AddDateTile(this ReportSection section, string title, DateOnly value, string? format = null, string? subtitle = null)
+    {
+        return section.AddElement(new DateTile(title, value, format, subtitle));
+    }
+
+    /// <summary>
     /// Adds free text to the section
     /// </summary>
     public static ReportSection AddText(this ReportSection section, string content, bool isHtml = false)
@@ -44,7 +60,15 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a bar chart to the section
     /// </summary>
-    public static ReportSection AddBarChart(this ReportSection section, string title, Dictionary<string, double> data, bool isHorizontal = false)
+    public static ReportSection AddBarChart(this ReportSection section, string title, IDictionary<string, double> data, bool isHorizontal = false)
+    {
+        return section.AddElement(new BarChart(title, data, isHorizontal));
+    }
+
+    /// <summary>
+    /// Adds a bar chart to the section
+    /// </summary>
+    public static ReportSection AddBarChart(this ReportSection section, string title, IDictionary<string, int> data, bool isHorizontal = false)
     {
         return section.AddElement(new BarChart(title, data, isHorizontal));
     }
@@ -52,7 +76,15 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a stacked bar chart to the section
     /// </summary>
-    public static ReportSection AddStackedBarChart(this ReportSection section, string title, Dictionary<string, Dictionary<string, double>> data, bool isHorizontal = false)
+    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, double>> data, bool isHorizontal = false)
+    {
+        return section.AddElement(new StackedBarChart(title, data, isHorizontal));
+    }
+
+    /// <summary>
+    /// Adds a stacked bar chart to the section
+    /// </summary>
+    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, int>> data, bool isHorizontal = false)
     {
         return section.AddElement(new StackedBarChart(title, data, isHorizontal));
     }
@@ -60,7 +92,7 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a simple stacked bar chart to the section
     /// </summary>
-    public static ReportSection AddStackedBarChart(this ReportSection section, string title, Dictionary<string, int> data, bool isHorizontal = false)
+    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, int> data, bool isHorizontal = false)
     {
         return section.AddElement(new StackedBarChart(title, data, isHorizontal));
     }
@@ -68,7 +100,7 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a line chart to the section
     /// </summary>
-    public static ReportSection AddLineChart(this ReportSection section, string title, Dictionary<string, Dictionary<string, double>> series, bool showPoints = true)
+    public static ReportSection AddLineChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, double>> series, bool showPoints = true)
     {
         return section.AddElement(new LineChart(title, series, showPoints));
     }
@@ -76,7 +108,7 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a single-series line chart to the section
     /// </summary>
-    public static ReportSection AddLineChart(this ReportSection section, string title, Dictionary<string, double> data, bool showPoints = true)
+    public static ReportSection AddLineChart(this ReportSection section, string title, IDictionary<string, double> data, bool showPoints = true)
     {
         return section.AddElement(new LineChart(title, data, showPoints));
     }
@@ -84,7 +116,15 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a pie chart to the section
     /// </summary>
-    public static ReportSection AddPieChart(this ReportSection section, string title, Dictionary<string, double> data, bool isDonut = false)
+    public static ReportSection AddPieChart(this ReportSection section, string title, IDictionary<string, double> data, bool isDonut = false)
+    {
+        return section.AddElement(new PieChart(title, data, isDonut));
+    }
+
+    /// <summary>
+    /// Adds a pie chart to the section
+    /// </summary>
+    public static ReportSection AddPieChart(this ReportSection section, string title, IDictionary<string, int> data, bool isDonut = false)
     {
         return section.AddElement(new PieChart(title, data, isDonut));
     }

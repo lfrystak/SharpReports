@@ -89,6 +89,9 @@ public class HtmlRenderer : IRenderer
             case NumberTile tile:
                 RenderNumberTile(sb, tile);
                 break;
+            case DateTile dateTile:
+                RenderDateTile(sb, dateTile);
+                break;
             case FreeText text:
                 RenderFreeText(sb, text);
                 break;
@@ -116,6 +119,18 @@ public class HtmlRenderer : IRenderer
     }
 
     private void RenderNumberTile(StringBuilder sb, NumberTile tile)
+    {
+        sb.AppendLine("                <div class=\"number-tile\">");
+        sb.AppendLine($"                    <div class=\"tile-title\">{EscapeHtml(tile.Title)}</div>");
+        sb.AppendLine($"                    <div class=\"tile-value\">{EscapeHtml(tile.GetFormattedValue())}</div>");
+        if (!string.IsNullOrEmpty(tile.Subtitle))
+        {
+            sb.AppendLine($"                    <div class=\"tile-subtitle\">{EscapeHtml(tile.Subtitle)}</div>");
+        }
+        sb.AppendLine("                </div>");
+    }
+
+    private void RenderDateTile(StringBuilder sb, DateTile tile)
     {
         sb.AppendLine("                <div class=\"number-tile\">");
         sb.AppendLine($"                    <div class=\"tile-title\">{EscapeHtml(tile.Title)}</div>");
