@@ -54,9 +54,22 @@ var report = ReportBuilder.WithTitle("Dashboard")
     .GenerateHtml();
 ```
 
-### 2. Adding Charts
+### 2. Adding Date Information
 
 ```csharp
+var report = ReportBuilder.WithTitle("Project Status")
+    .AddSection("Timeline", section => section
+        .SetColumns(3)
+        .AddDateTile("Start Date", new DateTime(2024, 1, 1), "yyyy-MM-dd")
+        .AddDateTile("Current Date", DateTime.Now, "MMMM dd, yyyy")
+        .AddDateTile("Deadline", DateOnly.FromDateTime(DateTime.Now.AddMonths(3)), "dd MMM yyyy", "3 months from now"))
+    .GenerateHtml();
+```
+
+### 3. Adding Charts
+
+```csharp
+// Works with double values
 var salesData = new Dictionary<string, double>
 {
     ["January"] = 45000,
@@ -64,14 +77,25 @@ var salesData = new Dictionary<string, double>
     ["March"] = 48000
 };
 
+// Also works with integers!
+var orderCounts = new Dictionary<string, int>
+{
+    ["January"] = 450,
+    ["February"] = 520,
+    ["March"] = 480
+};
+
 var report = ReportBuilder.WithTitle("Sales Report")
     .AddSection("Monthly Sales", section => section
-        .AddBarChart("Sales by Month", salesData)
+        .AddBarChart("Revenue by Month", salesData)
+        .AddBarChart("Order Counts", orderCounts)
         .AddLineChart("Trend", salesData))
     .GenerateHtml();
 ```
 
-### 3. Adding Tables
+All chart methods accept `IDictionary` types, so you can use Dictionary, SortedDictionary, or custom implementations.
+
+### 4. Adding Tables
 
 ```csharp
 var employeeData = new List<Dictionary<string, object>>
@@ -86,7 +110,7 @@ var report = ReportBuilder.WithTitle("Employee Report")
     .GenerateHtml();
 ```
 
-### 4. Multiple Sections with Different Layouts
+### 5. Multiple Sections with Different Layouts
 
 ```csharp
 var report = ReportBuilder.WithTitle("Comprehensive Report")
@@ -211,9 +235,10 @@ await report.SaveJsonAsync("api-report.json");
 
 ## Next Steps
 
-- Check out the [README.md](README.md) for complete API documentation
-- Explore the [Examples](Examples/) directory for more samples
-- Run the TestApp to see a comprehensive example
+- Check out the [README.md](../README.md) for overview and quick reference
+- Explore the [Examples](../Examples/) directory for code samples
+- Run the [SharpReports.Sample](../SharpReports.Sample/) application to see a comprehensive example
+- Review the [API Reference](api-reference.md) for detailed documentation
 
 ## Tips
 
@@ -226,4 +251,4 @@ await report.SaveJsonAsync("api-report.json");
 
 ## Support
 
-For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/yourusername/sharpreports).
+For issues, questions, or contributions, please open an issue or submit a pull request on GitHub.

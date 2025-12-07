@@ -2,7 +2,7 @@
   "title": "Q2 2024 Business Performance Report",
   "footer": "Confidential - Internal Use Only",
   "logoUrl": "https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany",
-  "generatedAt": "2025-11-30T14:34:59.723458Z",
+  "generatedAt": "2025-12-07T08:31:12.843245Z",
   "sections": [
     {
       "title": "Key Metrics",
@@ -10,7 +10,7 @@
       "elements": [
         {
           "type": "NumberTile",
-          "id": "68d064f406024cd8972f73163e7763f9",
+          "id": "71040df5f49540bf8db459e42af4c196",
           "title": "Total Revenue",
           "value": 432000,
           "format": "C0",
@@ -19,7 +19,7 @@
         },
         {
           "type": "NumberTile",
-          "id": "f680917cb69e43b0bc2a2569620e493b",
+          "id": "0ae4c87c1249443e9b60fd160b757c28",
           "title": "New Customers",
           "value": 47,
           "format": "N0",
@@ -28,7 +28,7 @@
         },
         {
           "type": "NumberTile",
-          "id": "921b26b6d28d46508a3b307433e2f3a4",
+          "id": "5f12c17c11b0440fb424e0d65ff0534c",
           "title": "Growth Rate",
           "value": 0.198,
           "format": "P1",
@@ -37,7 +37,7 @@
         },
         {
           "type": "NumberTile",
-          "id": "d3f79b0282374d97b908ba3e8994918f",
+          "id": "534dc2ee7fe1462990f708b540fc52f9",
           "title": "Customer Satisfaction",
           "value": 4.7,
           "format": "N1",
@@ -47,12 +47,48 @@
       ]
     },
     {
+      "title": "Timeline",
+      "columns": 3,
+      "elements": [
+        {
+          "type": "DateTile",
+          "id": "62ea7fb1dbdc4ae399e1a65ab9d7e313",
+          "title": "Quarter Start",
+          "dateTimeValue": "2024-04-01T00:00:00",
+          "dateOnlyValue": null,
+          "format": "MMMM dd, yyyy",
+          "subtitle": null,
+          "formattedValue": "April 01, 2024"
+        },
+        {
+          "type": "DateTile",
+          "id": "e5ba5ba45f0a46e88275669d5a83d51f",
+          "title": "Quarter End",
+          "dateTimeValue": "2024-06-30T00:00:00",
+          "dateOnlyValue": null,
+          "format": "MMMM dd, yyyy",
+          "subtitle": null,
+          "formattedValue": "June 30, 2024"
+        },
+        {
+          "type": "DateTile",
+          "id": "60b9ebf5e77b48a7926be6f40e1a9e14",
+          "title": "Report Generated",
+          "dateTimeValue": "2024-07-15T14:30:00",
+          "dateOnlyValue": null,
+          "format": "yyyy-MM-dd HH:mm",
+          "subtitle": "Generated date",
+          "formattedValue": "2024-07-15 14:30"
+        }
+      ]
+    },
+    {
       "title": "Revenue Analysis",
       "columns": 2,
       "elements": [
         {
           "type": "BarChart",
-          "id": "a544fa9b045149d9a2b8b88191d94915",
+          "id": "69306f82905849bbbe274202330a0a60",
           "title": "Revenue by Region",
           "data": {
             "North America": 125000,
@@ -64,7 +100,7 @@
         },
         {
           "type": "LineChart",
-          "id": "2cc9a302f7034adb85342688994f4643",
+          "id": "f306f8b6d6f84321aa8b5f13c552d561",
           "title": "Monthly Revenue Trend",
           "series": {
             "Monthly Revenue Trend": {
@@ -86,7 +122,7 @@
       "elements": [
         {
           "type": "PieChart",
-          "id": "076c444d028d4d99a01f4599f3e06032",
+          "id": "969afde1112e462cb4faa1c6d148a0f5",
           "title": "Product Mix (%)",
           "data": {
             "Enterprise": 45,
@@ -97,7 +133,7 @@
         },
         {
           "type": "StackedBarChart",
-          "id": "7cc79e6780f644e88634d7df77f19038",
+          "id": "55469823b9324c59b4907ba48b873cc1",
           "title": "Quarterly Performance",
           "data": {
             "Q1": {
@@ -119,7 +155,7 @@
       "elements": [
         {
           "type": "Table",
-          "id": "75abd365292d4630bc6218811f8801ac",
+          "id": "a2cae69092fe4be28d39ef8175a5c4f2",
           "title": "Q2 Top Revenue Contributors",
           "columns": [
             "Customer",
@@ -157,7 +193,7 @@
       "elements": [
         {
           "type": "FreeText",
-          "id": "e6b5e8bd76b241dc894d4486b9d68464",
+          "id": "3e1030b408fa40108f62dc8fa3ce0f61",
           "content": "Q2 2024 showed strong performance across all regions with total revenue of $432,000,\nrepresenting a 19.8% increase over Q1. Asia Pacific continues to be our strongest market,\nwhile Latin America presents significant growth opportunities.\n\nThe Enterprise product tier dominates our revenue mix at 45%, indicating strong traction\nin the high-value segment. Customer satisfaction remains high at 4.7/5.0.\n\nKey focus areas for Q3:\n\u2022 Expand sales team in Latin America\n\u2022 Launch new features for Professional tier\n\u2022 Increase customer retention initiatives",
           "isHtml": false
         }

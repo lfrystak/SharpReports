@@ -8,11 +8,11 @@
     <style>
 
         :root {
-            --primary-color: #059669;
-            --secondary-color: #6366f1;
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
             --background-color: #ffffff;
-            --text-color: #111827;
-            --font-family: Georgia, serif;
+            --text-color: #1e293b;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
         * {
@@ -185,8 +185,8 @@
 </head>
 <body>
     <div class="report-header">
-        <img src="https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany" alt="Logo" class="logo">
         <h1>Q2 2024 Business Performance Report</h1>
+        <img src="https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany" alt="Logo" class="logo">
     </div>
     <div class="report-content">
     <div class="section">
@@ -221,15 +221,39 @@
         </div>
     </div>
     <div class="section">
+        <h2>Timeline</h2>
+        <div class="grid grid-cols-3">
+            <div class="element">
+                <div class="number-tile">
+                    <div class="tile-title">Quarter Start</div>
+                    <div class="tile-value">April 01, 2024</div>
+                </div>
+            </div>
+            <div class="element">
+                <div class="number-tile">
+                    <div class="tile-title">Quarter End</div>
+                    <div class="tile-value">June 30, 2024</div>
+                </div>
+            </div>
+            <div class="element">
+                <div class="number-tile">
+                    <div class="tile-title">Report Generated</div>
+                    <div class="tile-value">2024-07-15 14:30</div>
+                    <div class="tile-subtitle">Generated date</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
         <h2>Revenue Analysis</h2>
         <div class="grid grid-cols-2">
             <div class="element">
                 <div class="chart-container">
                     <h3>Revenue by Region</h3>
-                    <canvas id="chart-a544fa9b045149d9a2b8b88191d94915"></canvas>
+                    <canvas id="chart-69306f82905849bbbe274202330a0a60"></canvas>
                 </div>
                 <script>
-                    new Chart(document.getElementById('chart-a544fa9b045149d9a2b8b88191d94915'), {
+                    new Chart(document.getElementById('chart-69306f82905849bbbe274202330a0a60'), {
                         type: 'bar',
                         data: {
                             labels: ["North America", "Europe", "Asia Pacific", "Latin America"],
@@ -252,10 +276,10 @@
             <div class="element">
                 <div class="chart-container">
                     <h3>Monthly Revenue Trend</h3>
-                    <canvas id="chart-2cc9a302f7034adb85342688994f4643"></canvas>
+                    <canvas id="chart-f306f8b6d6f84321aa8b5f13c552d561"></canvas>
                 </div>
                 <script>
-                    new Chart(document.getElementById('chart-2cc9a302f7034adb85342688994f4643'), {
+                    new Chart(document.getElementById('chart-f306f8b6d6f84321aa8b5f13c552d561'), {
                         type: 'line',
                         data: {
                             labels: ["April", "February", "January", "June", "March", "May"],
@@ -285,10 +309,10 @@
             <div class="element">
                 <div class="chart-container">
                     <h3>Product Mix (%)</h3>
-                    <canvas id="chart-076c444d028d4d99a01f4599f3e06032"></canvas>
+                    <canvas id="chart-969afde1112e462cb4faa1c6d148a0f5"></canvas>
                 </div>
                 <script>
-                    new Chart(document.getElementById('chart-076c444d028d4d99a01f4599f3e06032'), {
+                    new Chart(document.getElementById('chart-969afde1112e462cb4faa1c6d148a0f5'), {
                         type: 'doughnut',
                         data: {
                             labels: ["Enterprise", "Professional", "Starter"],
@@ -314,10 +338,10 @@
             <div class="element">
                 <div class="chart-container">
                     <h3>Quarterly Performance</h3>
-                    <canvas id="chart-7cc79e6780f644e88634d7df77f19038"></canvas>
+                    <canvas id="chart-55469823b9324c59b4907ba48b873cc1"></canvas>
                 </div>
                 <script>
-                    new Chart(document.getElementById('chart-7cc79e6780f644e88634d7df77f19038'), {
+                    new Chart(document.getElementById('chart-55469823b9324c59b4907ba48b873cc1'), {
                         type: 'bar',
                         data: {
                             labels: ["Q1", "Q2"],
@@ -409,7 +433,7 @@ Key focus areas for Q3:
     </div>
     <div class="report-footer">
         <p>Confidential - Internal Use Only</p>
-        <p class="timestamp">Generated: 2025-11-30 14:34:59 UTC</p>
+        <p class="timestamp">Generated: 2025-12-07 08:31:12 UTC</p>
     </div>
 </body>
 </html>

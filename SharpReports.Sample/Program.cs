@@ -3,7 +3,7 @@ using SharpReports.Extensions;
 using SharpReports.Rendering;
 
 Console.WriteLine("SharpReports Test Application");
-Console.WriteLine("============================\n");
+Console.WriteLine("=============================\n");
 
 // Sample data - simulating data extracted from an API
 var salesByRegion = new Dictionary<string, double>
@@ -31,10 +31,10 @@ var productMix = new Dictionary<string, double>
     ["Starter"] = 25
 };
 
-var quarterlyGrowth = new Dictionary<string, Dictionary<string, double>>
+var quarterlyGrowth = new Dictionary<string, IDictionary<string, double>>
 {
-    ["Q1"] = new() { ["Revenue"] = 145000, ["Costs"] = 95000 },
-    ["Q2"] = new() { ["Revenue"] = 174000, ["Costs"] = 102000 },
+    ["Q1"] = new Dictionary<string, double> { ["Revenue"] = 145000, ["Costs"] = 95000 },
+    ["Q2"] = new Dictionary<string, double> { ["Revenue"] = 174000, ["Costs"] = 102000 },
 };
 
 var topCustomers = new List<Dictionary<string, object>>
@@ -56,6 +56,12 @@ var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
         .AddNumberTile("New Customers", 47, "N0")
         .AddNumberTile("Growth Rate", 0.198, "P1", "↑ vs Q1")
         .AddNumberTile("Customer Satisfaction", 4.7, "N1", "out of 5.0"))
+
+    .AddSection("Timeline", section => section
+        .SetColumns(3)
+        .AddDateTile("Quarter Start", new DateTime(2024, 4, 1), "MMMM dd, yyyy")
+        .AddDateTile("Quarter End", new DateTime(2024, 6, 30), "MMMM dd, yyyy")
+        .AddDateTile("Report Generated", new DateTime(2024, 7, 15, 14, 30, 0), "yyyy-MM-dd HH:mm", "Generated date"))
 
     .AddSection("Revenue Analysis", section => section
         .SetColumns(2)

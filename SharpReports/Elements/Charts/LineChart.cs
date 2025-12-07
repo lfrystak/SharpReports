@@ -17,25 +17,30 @@ public class LineChart : ChartBase
     /// </summary>
     public bool ShowPoints { get; }
 
-    public LineChart(string title, Dictionary<string, Dictionary<string, double>> series, bool showPoints = true)
+    public LineChart(string title, IDictionary<string, IDictionary<string, double>> series, bool showPoints = true)
         : base(title)
     {
-        Series = series ?? throw new ArgumentNullException(nameof(series));
+        if (series == null) throw new ArgumentNullException(nameof(series));
+        Series = series.ToDictionary(
+            kvp => kvp.Key,
+            kvp => kvp.Value is Dictionary<string, double> dict ? dict : new Dictionary<string, double>(kvp.Value)
+        );
         ShowPoints = showPoints;
     }
 
     /// <summary>
     /// Alternative constructor for single series
     /// </summary>
-    public LineChart(string title, Dictionary<string, double> data, bool showPoints = true)
+    public LineChart(string title, IDictionary<string, double> data, bool showPoints = true)
         : base(title)
     {
         if (data == null)
             throw new ArgumentNullException(nameof(data));
 
+        var dataDict = data is Dictionary<string, double> dict ? dict : new Dictionary<string, double>(data);
         Series = new Dictionary<string, Dictionary<string, double>>
         {
-            [title] = data
+            [title] = dataDict
         };
         ShowPoints = showPoints;
     }

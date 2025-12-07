@@ -17,17 +17,32 @@ public class StackedBarChart : ChartBase
     /// </summary>
     public bool IsHorizontal { get; }
 
-    public StackedBarChart(string title, Dictionary<string, Dictionary<string, double>> data, bool isHorizontal = false)
+    public StackedBarChart(string title, IDictionary<string, IDictionary<string, double>> data, bool isHorizontal = false)
         : base(title)
     {
-        Data = data ?? throw new ArgumentNullException(nameof(data));
+        if (data == null) throw new ArgumentNullException(nameof(data));
+        Data = data.ToDictionary(
+            kvp => kvp.Key,
+            kvp => kvp.Value is Dictionary<string, double> dict ? dict : new Dictionary<string, double>(kvp.Value)
+        );
+        IsHorizontal = isHorizontal;
+    }
+
+    public StackedBarChart(string title, IDictionary<string, IDictionary<string, int>> data, bool isHorizontal = false)
+        : base(title)
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+        Data = data.ToDictionary(
+            kvp => kvp.Key,
+            kvp => kvp.Value.ToDictionary(innerKvp => innerKvp.Key, innerKvp => (double)innerKvp.Value)
+        );
         IsHorizontal = isHorizontal;
     }
 
     /// <summary>
     /// Alternative constructor for simple stacked data (category -> value, all in one series)
     /// </summary>
-    public StackedBarChart(string title, Dictionary<string, int> data, bool isHorizontal = false)
+    public StackedBarChart(string title, IDictionary<string, int> data, bool isHorizontal = false)
         : base(title)
     {
         if (data == null)

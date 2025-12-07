@@ -50,6 +50,17 @@ public class JsonRenderer : IRenderer
                 subtitle = tile.Subtitle,
                 formattedValue = tile.GetFormattedValue()
             },
+            DateTile dateTile => new
+            {
+                type = "DateTile",
+                id = dateTile.Id,
+                title = dateTile.Title,
+                dateTimeValue = dateTile.DateTimeValue,
+                dateOnlyValue = dateTile.DateOnlyValue?.ToDateTime(TimeOnly.MinValue),
+                format = dateTile.Format,
+                subtitle = dateTile.Subtitle,
+                formattedValue = dateTile.GetFormattedValue()
+            },
             FreeText text => new
             {
                 type = "FreeText",

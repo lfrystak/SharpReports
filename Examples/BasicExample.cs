@@ -20,12 +20,12 @@ public class BasicExample
             ["West"] = 41000
         };
 
-        var productSales = new Dictionary<string, Dictionary<string, double>>
+        var productSales = new Dictionary<string, IDictionary<string, double>>
         {
-            ["Q1"] = new() { ["Product A"] = 12000, ["Product B"] = 8000, ["Product C"] = 5000 },
-            ["Q2"] = new() { ["Product A"] = 15000, ["Product B"] = 9000, ["Product C"] = 6000 },
-            ["Q3"] = new() { ["Product A"] = 14000, ["Product B"] = 11000, ["Product C"] = 7000 },
-            ["Q4"] = new() { ["Product A"] = 16000, ["Product B"] = 10000, ["Product C"] = 8000 }
+            ["Q1"] = new Dictionary<string, double> { ["Product A"] = 12000, ["Product B"] = 8000, ["Product C"] = 5000 },
+            ["Q2"] = new Dictionary<string, double> { ["Product A"] = 15000, ["Product B"] = 9000, ["Product C"] = 6000 },
+            ["Q3"] = new Dictionary<string, double> { ["Product A"] = 14000, ["Product B"] = 11000, ["Product C"] = 7000 },
+            ["Q4"] = new Dictionary<string, double> { ["Product A"] = 16000, ["Product B"] = 10000, ["Product C"] = 8000 }
         };
 
         var monthlyTrend = new Dictionary<string, double>
@@ -61,6 +61,12 @@ public class BasicExample
                 .AddNumberTile("Total Revenue", 176000, "C0")
                 .AddNumberTile("Total Orders", 1247, "N0")
                 .AddNumberTile("Avg Order Value", 141.14, "C2", "↑ 12% vs Q1"))
+
+            .AddSection("Important Dates", section => section
+                .SetColumns(3)
+                .AddDateTile("Report Period Start", new DateTime(2024, 4, 1), "yyyy-MM-dd")
+                .AddDateTile("Report Period End", new DateTime(2024, 6, 30), "yyyy-MM-dd")
+                .AddDateTile("Next Review", DateOnly.FromDateTime(new DateTime(2024, 10, 15)), "dd MMM yyyy", "Q3 review date"))
 
             .AddSection("Sales by Region", section => section
                 .SetColumns(2)

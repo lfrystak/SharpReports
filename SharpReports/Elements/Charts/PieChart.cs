@@ -17,10 +17,19 @@ public class PieChart : ChartBase
     /// </summary>
     public bool IsDonut { get; }
 
-    public PieChart(string title, Dictionary<string, double> data, bool isDonut = false)
+    public PieChart(string title, IDictionary<string, double> data, bool isDonut = false)
         : base(title)
     {
-        Data = data ?? throw new ArgumentNullException(nameof(data));
+        if (data == null) throw new ArgumentNullException(nameof(data));
+        Data = data is Dictionary<string, double> dict ? dict : new Dictionary<string, double>(data);
+        IsDonut = isDonut;
+    }
+
+    public PieChart(string title, IDictionary<string, int> data, bool isDonut = false)
+        : base(title)
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+        Data = data.ToDictionary(kvp => kvp.Key, kvp => (double)kvp.Value);
         IsDonut = isDonut;
     }
 }
