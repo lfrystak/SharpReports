@@ -17,6 +17,7 @@ SharpReports/
 ├── Elements/                       # Report element implementations
 │   ├── ReportElementBase.cs       # Base class for elements
 │   ├── NumberTile.cs              # Metric display
+│   ├── DateTile.cs                # Date/DateTime display
 │   ├── FreeText.cs                # Text content
 │   ├── Table.cs                   # Tabular data
 │   └── Charts/                    # Chart implementations
@@ -103,6 +104,12 @@ Container for elements with:
 - Supports .NET format strings (C, N, P, etc.)
 - Optional subtitle for context
 
+**DateTile**
+- Displays DateTime or DateOnly values with formatting
+- Supports custom date format strings
+- Optional subtitle for context
+- Handles both date and datetime types
+
 **FreeText**
 - Plain text or HTML content
 - Useful for descriptions and notes
@@ -114,18 +121,21 @@ Container for elements with:
 
 ### Chart Elements
 
-All charts inherit from `ChartBase`:
+All charts inherit from `ChartBase` and accept `IDictionary` types:
 
 **BarChart**
 - Vertical or horizontal bars
+- Accepts `IDictionary<string, double>` or `IDictionary<string, int>`
 - Simple label → value mapping
 
 **StackedBarChart**
 - Multiple series stacked
-- Supports both simple and complex data
+- Accepts double or int data types
+- Supports both simple and complex data structures
 
 **LineChart**
 - Single or multiple series
+- Accepts `IDictionary` types for flexible input
 - Optional point markers
 
 **PieChart**
@@ -220,21 +230,30 @@ public static class CustomExtensions
 - Could be refactored to immutable if needed
 
 ### 2. Data Structures
-- Charts use `Dictionary<string, double>` for simple data
+- Charts accept `IDictionary<>` interfaces (not concrete Dictionary)
+- Support for both `double` and `int` data types
 - Tables support both row-based and column-based input
 - Flexible enough for most scenarios
 
-### 3. Rendering Strategy
+### 3. IDictionary vs Dictionary
+**Decision:** Accept IDictionary interfaces instead of concrete Dictionary types
+**Rationale:**
+- More flexible - works with Dictionary, SortedDictionary, custom implementations
+- Follows "Program to interfaces" principle
+- Internally converts to Dictionary for storage
+- Allows users to pass various dictionary types without casting
+
+### 4. Rendering Strategy
 - HTML uses Chart.js via CDN (no bundling needed)
 - JSON mirrors the object structure
 - Separation allows for easy addition of new formats
 
-### 4. Theming
+### 5. Theming
 - CSS variables for easy customization
 - Theme object is simple and focused
 - Easy to extend with more properties
 
-### 5. Async Support
+### 6. Async Support
 - File I/O operations are async
 - Rendering is sync (CPU-bound)
 - Async wrappers provided for convenience

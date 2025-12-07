@@ -6,11 +6,12 @@ A lightweight, fluent C# library for generating beautiful HTML and JSON reports 
 
 - **Fluent API** - Intuitive, chainable methods for report building
 - **Multiple Formats** - Generate HTML (with Chart.js) and JSON outputs
-- **Rich Elements** - Number tiles, charts, tables, and free text
+- **Rich Elements** - Number tiles, date tiles, charts, tables, and free text
 - **Chart Types** - Bar, stacked bar, line, and pie charts
 - **Responsive Layout** - Grid-based sections with configurable columns
 - **Theming** - Customizable colors and fonts via CSS variables
 - **Async Support** - Async methods for file I/O operations
+- **Flexible Input** - Accepts IDictionary types and supports both int and double data
 - **Zero Dependencies** - Minimal external dependencies (Chart.js via CDN for HTML)
 
 ## Installation
@@ -62,23 +63,59 @@ section.AddNumberTile("Revenue", 176000, "C0")
 section.AddNumberTile("Growth Rate", 0.15, "P1", "↑ vs last quarter")
 ```
 
+### Date Tiles
+
+Display dates with optional formatting and subtitles:
+
+```csharp
+section.AddDateTile("Launch Date", new DateTime(2024, 6, 15), "yyyy-MM-dd")
+section.AddDateTile("Deadline", DateOnly.FromDateTime(DateTime.Now.AddDays(30)), "dd MMM yyyy", "30 days from now")
+```
+
+Supports both `DateTime` and `DateOnly` types with standard .NET date format strings.
+
 ### Charts
 
 **Bar Chart**
 ```csharp
+// Works with double values
 section.AddBarChart("Sales by Region", new Dictionary<string, double>
 {
     ["North"] = 45000,
     ["South"] = 38000
 }, isHorizontal: false)
+
+// Also works with integers
+section.AddBarChart("Order Counts", new Dictionary<string, int>
+{
+    ["North"] = 450,
+    ["South"] = 380
+})
 ```
+
+All chart methods accept `IDictionary<,>` types, allowing flexibility with Dictionary, SortedDictionary, or custom implementations.
 
 **Stacked Bar Chart**
 ```csharp
+// Multi-series with double values
 section.AddStackedBarChart("Product Sales", new Dictionary<string, Dictionary<string, double>>
 {
     ["Q1"] = new() { ["Product A"] = 12000, ["Product B"] = 8000 },
     ["Q2"] = new() { ["Product A"] = 15000, ["Product B"] = 9000 }
+})
+
+// Also supports integer data
+section.AddStackedBarChart("Task Status", new Dictionary<string, Dictionary<string, int>>
+{
+    ["Sprint 1"] = new() { ["Completed"] = 15, ["In Progress"] = 8 },
+    ["Sprint 2"] = new() { ["Completed"] = 20, ["In Progress"] = 5 }
+})
+
+// Simple single-series version
+section.AddStackedBarChart("Categories", new Dictionary<string, int>
+{
+    ["Category A"] = 100,
+    ["Category B"] = 200
 })
 ```
 
@@ -94,7 +131,19 @@ section.AddLineChart("Trend", new Dictionary<string, double>
 
 **Pie Chart**
 ```csharp
-section.AddPieChart("Distribution", data, isDonut: true)
+// With double values
+section.AddPieChart("Distribution", new Dictionary<string, double>
+{
+    ["Category A"] = 35.5,
+    ["Category B"] = 28.3
+}, isDonut: true)
+
+// With integer values
+section.AddPieChart("Votes", new Dictionary<string, int>
+{
+    ["Option A"] = 42,
+    ["Option B"] = 38
+})
 ```
 
 ### Tables

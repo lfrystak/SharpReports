@@ -57,6 +57,12 @@ var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
         .AddNumberTile("Growth Rate", 0.198, "P1", "↑ vs Q1")
         .AddNumberTile("Customer Satisfaction", 4.7, "N1", "out of 5.0"))
 
+    .AddSection("Timeline", section => section
+        .SetColumns(3)
+        .AddDateTile("Quarter Start", new DateTime(2024, 4, 1), "MMMM dd, yyyy")
+        .AddDateTile("Quarter End", new DateTime(2024, 6, 30), "MMMM dd, yyyy")
+        .AddDateTile("Report Generated", DateTime.Now, "yyyy-MM-dd HH:mm", "Current time"))
+
     .AddSection("Revenue Analysis", section => section
         .SetColumns(2)
         .AddBarChart("Revenue by Region", salesByRegion)

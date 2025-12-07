@@ -62,6 +62,12 @@ public class BasicExample
                 .AddNumberTile("Total Orders", 1247, "N0")
                 .AddNumberTile("Avg Order Value", 141.14, "C2", "↑ 12% vs Q1"))
 
+            .AddSection("Important Dates", section => section
+                .SetColumns(3)
+                .AddDateTile("Report Period Start", new DateTime(2024, 4, 1), "yyyy-MM-dd")
+                .AddDateTile("Report Period End", new DateTime(2024, 6, 30), "yyyy-MM-dd")
+                .AddDateTile("Next Review", DateOnly.FromDateTime(new DateTime(2024, 10, 15)), "dd MMM yyyy", "Q3 review date"))
+
             .AddSection("Sales by Region", section => section
                 .SetColumns(2)
                 .AddBarChart("Regional Performance", salesByRegion)

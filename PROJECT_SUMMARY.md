@@ -13,21 +13,25 @@ SharpReports is a complete, production-ready C# library for generating beautiful
 - ✓ Async support for file operations
 - ✓ Theme customization
 - ✓ Responsive grid layout system
+- ✓ IDictionary interface support for flexible input
 
 ### Report Elements
 - ✓ **NumberTile** - Display key metrics with formatting
+- ✓ **DateTile** - Display dates/datetimes with formatting
 - ✓ **FreeText** - Plain text or HTML content
 - ✓ **Table** - Tabular data (row-based or column-based)
-- ✓ **BarChart** - Vertical or horizontal bars
-- ✓ **StackedBarChart** - Multi-series stacked bars
+- ✓ **BarChart** - Vertical or horizontal bars (supports int & double)
+- ✓ **StackedBarChart** - Multi-series stacked bars (supports int & double)
 - ✓ **LineChart** - Single or multi-series line graphs
-- ✓ **PieChart** - Standard or donut charts
+- ✓ **PieChart** - Standard or donut charts (supports int & double)
 
 ### Additional Features
 - ✓ Logo support
 - ✓ Footer text
 - ✓ Custom themes (colors, fonts)
 - ✓ Number formatting (currency, percentage, etc.)
+- ✓ Date formatting with DateTime and DateOnly support
+- ✓ Integer data support for charts
 - ✓ Multi-column layouts (1-4 columns per section)
 - ✓ Mobile-responsive design
 - ✓ XML documentation for IntelliSense
@@ -54,26 +58,27 @@ SharpReports/
 
 ## Files Created
 
-### Library Code (19 files)
+### Library Code (20 files)
 1. `Core/IReportElement.cs` - Element interface
 2. `Core/Report.cs` - Report data model
 3. `Core/ReportBuilder.cs` - Fluent builder
 4. `Core/ReportSection.cs` - Section container
 5. `Elements/ReportElementBase.cs` - Base element class
 6. `Elements/NumberTile.cs` - Metric display
-7. `Elements/FreeText.cs` - Text content
-8. `Elements/Table.cs` - Tables
-9. `Elements/Charts/ChartBase.cs` - Chart base class
-10. `Elements/Charts/BarChart.cs` - Bar charts
-11. `Elements/Charts/StackedBarChart.cs` - Stacked bars
-12. `Elements/Charts/LineChart.cs` - Line charts
-13. `Elements/Charts/PieChart.cs` - Pie/donut charts
-14. `Rendering/IRenderer.cs` - Renderer interface
-15. `Rendering/HtmlRenderer.cs` - HTML generator
-16. `Rendering/JsonRenderer.cs` - JSON generator
-17. `Rendering/Theme.cs` - Theme configuration
-18. `Extensions/ReportSectionExtensions.cs` - Fluent extensions
-19. `SharpReports.csproj` - Project file
+7. `Elements/DateTile.cs` - Date display
+8. `Elements/FreeText.cs` - Text content
+9. `Elements/Table.cs` - Tables
+10. `Elements/Charts/ChartBase.cs` - Chart base class
+11. `Elements/Charts/BarChart.cs` - Bar charts
+12. `Elements/Charts/StackedBarChart.cs` - Stacked bars
+13. `Elements/Charts/LineChart.cs` - Line charts
+14. `Elements/Charts/PieChart.cs` - Pie/donut charts
+15. `Rendering/IRenderer.cs` - Renderer interface
+16. `Rendering/HtmlRenderer.cs` - HTML generator
+17. `Rendering/JsonRenderer.cs` - JSON generator
+18. `Rendering/Theme.cs` - Theme configuration
+19. `Extensions/ReportSectionExtensions.cs` - Fluent extensions
+20. `SharpReports.csproj` - Project file
 
 ### Examples & Tests (2 files)
 1. `Examples/BasicExample.cs` - Comprehensive example
@@ -228,9 +233,78 @@ The library is ready for:
 ✓ Extensible design
 ✓ Production-ready code
 
+## Changes in 'usage-fixes' Branch
+
+### New Features Added
+
+#### 1. DateTile Element
+A new element type for displaying dates and datetimes:
+- Supports both `DateTime` and `DateOnly` types
+- Custom format strings (e.g., "yyyy-MM-dd", "dd MMM yyyy")
+- Optional subtitle for context
+- Default formats: "g" for DateTime, "d" for DateOnly
+- Reuses NumberTile styling in HTML
+
+**Usage:**
+```csharp
+section.AddDateTile("Launch Date", new DateTime(2024, 6, 15), "yyyy-MM-dd")
+section.AddDateTile("Deadline", DateOnly.Parse("2024-12-31"), "dd MMM yyyy", "End of year")
+```
+
+#### 2. IDictionary Interface Support
+Chart constructors now accept `IDictionary<>` instead of concrete `Dictionary<>`:
+- **Breaking Change**: Method signatures changed from `Dictionary<,>` to `IDictionary<,>`
+- More flexible - accepts Dictionary, SortedDictionary, or custom implementations
+- Follows "Program to interfaces" principle
+- Internally converts to Dictionary for storage
+
+**Before:**
+```csharp
+public BarChart(string title, Dictionary<string, double> data, ...)
+```
+
+**After:**
+```csharp
+public BarChart(string title, IDictionary<string, double> data, ...)
+```
+
+#### 3. Integer Data Support
+New constructor overloads for charts that accept integer data:
+- `BarChart(string, IDictionary<string, int>, bool)`
+- `PieChart(string, IDictionary<string, int>, bool)`
+- `StackedBarChart(string, IDictionary<string, IDictionary<string, int>>, bool)`
+
+Automatically converts int to double internally, reducing boilerplate code.
+
+**Usage:**
+```csharp
+var counts = new Dictionary<string, int> { ["A"] = 100, ["B"] = 200 };
+section.AddBarChart("Counts", counts);  // No manual conversion needed!
+```
+
+### Files Modified
+1. `Elements/DateTile.cs` - **NEW** element
+2. `Elements/Charts/BarChart.cs` - IDictionary support + int overload
+3. `Elements/Charts/LineChart.cs` - IDictionary support
+4. `Elements/Charts/PieChart.cs` - IDictionary support + int overload
+5. `Elements/Charts/StackedBarChart.cs` - IDictionary support + int overloads
+6. `Extensions/ReportSectionExtensions.cs` - New AddDateTile methods + updated signatures
+7. `Rendering/HtmlRenderer.cs` - DateTile rendering support
+8. `Rendering/JsonRenderer.cs` - DateTile serialization support
+
+### API Changes Summary
+- **New**: `AddDateTile(DateTime)` and `AddDateTile(DateOnly)` extension methods
+- **Changed**: All chart methods now accept `IDictionary` instead of `Dictionary`
+- **New**: Chart methods with integer data overloads
+
+### Design Rationale
+1. **DateTile**: Common need to display dates in reports, complements NumberTile
+2. **IDictionary**: Best practice to program to interfaces, increases flexibility
+3. **Integer support**: Reduces friction when users have int data (common case)
+
 ## Conclusion
 
-SharpReports is a complete, well-designed library that solves the real-world problem of generating beautiful reports from application data. It's ready to use in your projects today!
+SharpReports is a complete, well-designed library that solves the real-world problem of generating beautiful reports from application data. The 'usage-fixes' branch adds important enhancements for better usability and flexibility. It's ready to use in your projects today!
 
 ## Quick Links
 

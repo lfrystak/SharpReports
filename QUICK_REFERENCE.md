@@ -25,31 +25,46 @@ section.AddNumberTile(title, value, format?, subtitle?)
 .AddNumberTile("Rate", 0.156, "P1", "↑ vs last month")
 ```
 
+### Date Tile
+```csharp
+section.AddDateTile(title, dateValue, format?, subtitle?)
+
+// Examples:
+.AddDateTile("Launch Date", new DateTime(2024, 6, 15), "yyyy-MM-dd")
+.AddDateTile("Deadline", DateOnly.Parse("2024-12-31"), "dd MMM yyyy", "End of year")
+.AddDateTile("Report Date", DateTime.Now, "MMMM dd, yyyy HH:mm")
+```
+
+Supports both `DateTime` and `DateOnly` types.
+
 ### Bar Chart
 ```csharp
 section.AddBarChart(title, data, isHorizontal?)
 
-// Example:
-.AddBarChart("Sales", new Dictionary<string, double>
-{
-    ["Q1"] = 45000,
-    ["Q2"] = 52000
-}, isHorizontal: false)
+// Accepts IDictionary<string, double> or IDictionary<string, int>
+.AddBarChart("Sales", new Dictionary<string, double> { ["Q1"] = 45000 })
+.AddBarChart("Counts", new Dictionary<string, int> { ["Items"] = 100 })
 ```
 
 ### Stacked Bar Chart
 ```csharp
 section.AddStackedBarChart(title, data, isHorizontal?)
 
-// Complex:
+// Accepts double or int data types
+// Multi-series (double):
 .AddStackedBarChart("Sales", new Dictionary<string, Dictionary<string, double>>
 {
-    ["Q1"] = new() { ["Product A"] = 12000, ["Product B"] = 8000 },
-    ["Q2"] = new() { ["Product A"] = 15000, ["Product B"] = 9000 }
+    ["Q1"] = new() { ["Product A"] = 12000, ["Product B"] = 8000 }
 })
 
-// Simple:
-.AddStackedBarChart("Sales", new Dictionary<string, int>
+// Multi-series (int):
+.AddStackedBarChart("Tasks", new Dictionary<string, Dictionary<string, int>>
+{
+    ["Sprint 1"] = new() { ["Done"] = 15, ["In Progress"] = 8 }
+})
+
+// Simple single-series:
+.AddStackedBarChart("Categories", new Dictionary<string, int>
 {
     ["Category A"] = 100,
     ["Category B"] = 200
@@ -79,13 +94,18 @@ section.AddLineChart(title, data, showPoints?)
 ```csharp
 section.AddPieChart(title, data, isDonut?)
 
-// Example:
+// Accepts IDictionary<string, double> or IDictionary<string, int>
 .AddPieChart("Distribution", new Dictionary<string, double>
 {
-    ["Category A"] = 35,
-    ["Category B"] = 28,
-    ["Category C"] = 37
+    ["Category A"] = 35.5,
+    ["Category B"] = 28.3
 }, isDonut: true)
+
+.AddPieChart("Votes", new Dictionary<string, int>
+{
+    ["Option A"] = 42,
+    ["Option B"] = 38
+})
 ```
 
 ### Table
