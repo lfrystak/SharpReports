@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <AnalysisLevel>latest-Recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <GlobalAnalyzerConfigFiles Include="$(MSBuildThisFileDirectory)\analyzers\GlobalAnalyzerConfig.analyzerconfig" />
+  </ItemGroup>
+</Project>
