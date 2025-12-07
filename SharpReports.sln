@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpReports", "SharpReports\SharpReports.csproj", "{9C337442-0E2D-4AAA-9574-C31CA4D8049C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{64FBDC2F-FE98-42A1-8760-FA7F4A666659}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpReports.Sample", "SharpReports.Sample\SharpReports.Sample.csproj", "{64FBDC2F-FE98-42A1-8760-FA7F4A666659}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

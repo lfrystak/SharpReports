@@ -235,9 +235,10 @@ await report.SaveJsonAsync("api-report.json");
 
 ## Next Steps
 
-- Check out the [README.md](README.md) for complete API documentation
-- Explore the [Examples](Examples/) directory for more samples
-- Run the TestApp to see a comprehensive example
+- Check out the [README.md](../README.md) for overview and quick reference
+- Explore the [Examples](../Examples/) directory for code samples
+- Run the [SharpReports.Sample](../SharpReports.Sample/) application to see a comprehensive example
+- Review the [API Reference](api-reference.md) for detailed documentation
 
 ## Tips
 
@@ -250,4 +251,4 @@ await report.SaveJsonAsync("api-report.json");
 
 ## Support
 
-For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/yourusername/sharpreports).
+For issues, questions, or contributions, please open an issue or submit a pull request on GitHub.
