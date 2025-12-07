@@ -20,12 +20,12 @@ public class BasicExample
             ["West"] = 41000
         };
 
-        var productSales = new Dictionary<string, Dictionary<string, double>>
+        var productSales = new Dictionary<string, IDictionary<string, double>>
         {
-            ["Q1"] = new() { ["Product A"] = 12000, ["Product B"] = 8000, ["Product C"] = 5000 },
-            ["Q2"] = new() { ["Product A"] = 15000, ["Product B"] = 9000, ["Product C"] = 6000 },
-            ["Q3"] = new() { ["Product A"] = 14000, ["Product B"] = 11000, ["Product C"] = 7000 },
-            ["Q4"] = new() { ["Product A"] = 16000, ["Product B"] = 10000, ["Product C"] = 8000 }
+            ["Q1"] = new Dictionary<string, double> { ["Product A"] = 12000, ["Product B"] = 8000, ["Product C"] = 5000 },
+            ["Q2"] = new Dictionary<string, double> { ["Product A"] = 15000, ["Product B"] = 9000, ["Product C"] = 6000 },
+            ["Q3"] = new Dictionary<string, double> { ["Product A"] = 14000, ["Product B"] = 11000, ["Product C"] = 7000 },
+            ["Q4"] = new Dictionary<string, double> { ["Product A"] = 16000, ["Product B"] = 10000, ["Product C"] = 8000 }
         };
 
         var monthlyTrend = new Dictionary<string, double>
