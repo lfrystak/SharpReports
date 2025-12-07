@@ -33,11 +33,11 @@ public class HtmlRenderer : IRenderer
 
         // Header
         sb.AppendLine("    <div class=\"report-header\">");
+        sb.AppendLine($"        <h1>{EscapeHtml(report.Title)}</h1>");
         if (!string.IsNullOrEmpty(report.LogoUrl))
         {
             sb.AppendLine($"        <img src=\"{EscapeHtml(report.LogoUrl)}\" alt=\"Logo\" class=\"logo\">");
         }
-        sb.AppendLine($"        <h1>{EscapeHtml(report.Title)}</h1>");
         sb.AppendLine("    </div>");
 
         // Content

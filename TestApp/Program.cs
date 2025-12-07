@@ -3,7 +3,7 @@ using SharpReports.Extensions;
 using SharpReports.Rendering;
 
 Console.WriteLine("SharpReports Test Application");
-Console.WriteLine("============================\n");
+Console.WriteLine("=============================\n");
 
 // Sample data - simulating data extracted from an API
 var salesByRegion = new Dictionary<string, double>
