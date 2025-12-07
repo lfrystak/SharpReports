@@ -1,0 +1,40 @@
+# Remove the line below if you want to inherit .editorconfig settings from higher directories
+root = true
+
+# All files
+[*]
+# Indentation and spacing
+indent_size = 4
+indent_style = space
+tab_width = 4
+# New line preferences
+end_of_line = crlf
+insert_final_newline = false
+
+# Xml files
+[*.xml]
+indent_size = 2
+tab_width = 2
+
+# Json files
+[*.json]
+indent_size = 2
+tab_width = 2
+
+# Project files
+[*.{csproj,props}]
+indent_size = 2
+tab_width = 2
+
+# Yaml files
+[*.{yml,yaml}]
+indent_size = 2
+tab_width = 2
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+
+# C# files
+[*.cs]
+charset = utf-8-bom
