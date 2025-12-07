@@ -31,10 +31,10 @@ var productMix = new Dictionary<string, double>
     ["Starter"] = 25
 };
 
-var quarterlyGrowth = new Dictionary<string, Dictionary<string, double>>
+var quarterlyGrowth = new Dictionary<string, IDictionary<string, double>>
 {
-    ["Q1"] = new() { ["Revenue"] = 145000, ["Costs"] = 95000 },
-    ["Q2"] = new() { ["Revenue"] = 174000, ["Costs"] = 102000 },
+    ["Q1"] = new Dictionary<string, double> { ["Revenue"] = 145000, ["Costs"] = 95000 },
+    ["Q2"] = new Dictionary<string, double> { ["Revenue"] = 174000, ["Costs"] = 102000 },
 };
 
 var topCustomers = new List<Dictionary<string, object>>
@@ -61,7 +61,7 @@ var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
         .SetColumns(3)
         .AddDateTile("Quarter Start", new DateTime(2024, 4, 1), "MMMM dd, yyyy")
         .AddDateTile("Quarter End", new DateTime(2024, 6, 30), "MMMM dd, yyyy")
-        .AddDateTile("Report Generated", DateTime.Now, "yyyy-MM-dd HH:mm", "Current time"))
+        .AddDateTile("Report Generated", new DateTime(2024, 7, 15, 14, 30, 0), "yyyy-MM-dd HH:mm", "Generated date"))
 
     .AddSection("Revenue Analysis", section => section
         .SetColumns(2)
