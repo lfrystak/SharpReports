@@ -52,9 +52,9 @@ var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
     .WithLogo("https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany")
     .AddSection("Key Metrics", section => section
         .SetColumns(4)
-        .AddNumberTile("Total Revenue", 432000, "C0")
-        .AddNumberTile("New Customers", 47, "N0")
-        .AddNumberTile("Growth Rate", 0.198, "P1", "↑ vs Q1")
+        .AddNumberTile("Total Revenue", 432000, "C0", tooltip: "Total revenue from all regions and product lines for Q2 2024")
+        .AddNumberTile("New Customers", 47, "N0", tooltip: "Number of new customer accounts opened during this quarter")
+        .AddNumberTile("Growth Rate", 0.198, "P1", "↑ vs Q1", "Year-over-year growth compared to the same quarter last year")
         .AddNumberTile("Customer Satisfaction", 4.7, "N1", "out of 5.0"))
 
     .AddSection("Timeline", section => section

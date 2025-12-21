@@ -32,22 +32,29 @@ public class DateTile : ReportElementBase
     /// </summary>
     public string? Subtitle { get; }
 
-    public DateTile(string title, DateTime value, string? format = null, string? subtitle = null)
+    /// <summary>
+    /// Gets the optional tooltip text shown on hover
+    /// </summary>
+    public string? Tooltip { get; }
+
+    public DateTile(string title, DateTime value, string? format = null, string? subtitle = null, string? tooltip = null)
     {
         Title = title ?? throw new ArgumentNullException(nameof(title));
         DateTimeValue = value;
         DateOnlyValue = null;
         Format = format;
         Subtitle = subtitle;
+        Tooltip = tooltip;
     }
 
-    public DateTile(string title, DateOnly value, string? format = null, string? subtitle = null)
+    public DateTile(string title, DateOnly value, string? format = null, string? subtitle = null, string? tooltip = null)
     {
         Title = title ?? throw new ArgumentNullException(nameof(title));
         DateTimeValue = null;
         DateOnlyValue = value;
         Format = format;
         Subtitle = subtitle;
+        Tooltip = tooltip;
     }
 
     /// <summary>

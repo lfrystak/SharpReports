@@ -124,6 +124,13 @@ public class HtmlRenderer : IRenderer
     private void RenderNumberTile(StringBuilder sb, NumberTile tile)
     {
         sb.AppendLine("                <div class=\"number-tile\">");
+        if (!string.IsNullOrEmpty(tile.Tooltip))
+        {
+            sb.AppendLine("                    <div class=\"tile-tooltip\">");
+            sb.AppendLine("                        <span class=\"tooltip-icon\">i</span>");
+            sb.AppendLine($"                        <div class=\"tooltip-content\">{EscapeHtml(tile.Tooltip)}</div>");
+            sb.AppendLine("                    </div>");
+        }
         sb.AppendLine($"                    <div class=\"tile-title\">{EscapeHtml(tile.Title)}</div>");
         sb.AppendLine($"                    <div class=\"tile-value\">{EscapeHtml(tile.GetFormattedValue())}</div>");
         if (!string.IsNullOrEmpty(tile.Subtitle))
@@ -136,6 +143,13 @@ public class HtmlRenderer : IRenderer
     private void RenderDateTile(StringBuilder sb, DateTile tile)
     {
         sb.AppendLine("                <div class=\"number-tile\">");
+        if (!string.IsNullOrEmpty(tile.Tooltip))
+        {
+            sb.AppendLine("                    <div class=\"tile-tooltip\">");
+            sb.AppendLine("                        <span class=\"tooltip-icon\">i</span>");
+            sb.AppendLine($"                        <div class=\"tooltip-content\">{EscapeHtml(tile.Tooltip)}</div>");
+            sb.AppendLine("                    </div>");
+        }
         sb.AppendLine($"                    <div class=\"tile-title\">{EscapeHtml(tile.Title)}</div>");
         sb.AppendLine($"                    <div class=\"tile-value\">{EscapeHtml(tile.GetFormattedValue())}</div>");
         if (!string.IsNullOrEmpty(tile.Subtitle))
@@ -526,6 +540,73 @@ public class HtmlRenderer : IRenderer
             font-weight: 500;
             color: var(--secondary-color);
             margin-top: 0.5rem;
+        }}
+
+        .tile-tooltip {{
+            position: absolute;
+            top: -0.75rem;
+            right: -0.5rem;
+            z-index: 10;
+        }}
+
+        .tooltip-icon {{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-style: normal;
+            cursor: help;
+            {transitionStyle}
+        }}
+
+        .tooltip-icon:hover {{
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+        }}
+
+        .tooltip-content {{
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            min-width: 200px;
+            max-width: 300px;
+            padding: 0.75rem;
+            background-color: var(--text-color);
+            color: var(--background-color);
+            font-size: 0.8125rem;
+            font-weight: 400;
+            line-height: 1.5;
+            border-radius: var(--border-radius-sm);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            {transitionStyle}
+            pointer-events: none;
+            white-space: normal;
+            text-align: left;
+        }}
+
+        .tooltip-content::before {{
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            right: 0.5rem;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid var(--text-color);
+        }}
+
+        .tooltip-icon:hover + .tooltip-content {{
+            opacity: 1;
+            visibility: visible;
         }}
 
         .free-text {{

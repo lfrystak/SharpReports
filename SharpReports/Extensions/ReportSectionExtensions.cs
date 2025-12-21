@@ -12,25 +12,25 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a number tile to the section
     /// </summary>
-    public static ReportSection AddNumberTile(this ReportSection section, string title, double value, string? format = null, string? subtitle = null)
+    public static ReportSection AddNumberTile(this ReportSection section, string title, double value, string? format = null, string? subtitle = null, string? tooltip = null)
     {
-        return section.AddElement(new NumberTile(title, value, format, subtitle));
+        return section.AddElement(new NumberTile(title, value, format, subtitle, tooltip));
     }
 
     /// <summary>
     /// Adds a date tile to the section
     /// </summary>
-    public static ReportSection AddDateTile(this ReportSection section, string title, DateTime value, string? format = null, string? subtitle = null)
+    public static ReportSection AddDateTile(this ReportSection section, string title, DateTime value, string? format = null, string? subtitle = null, string? tooltip = null)
     {
-        return section.AddElement(new DateTile(title, value, format, subtitle));
+        return section.AddElement(new DateTile(title, value, format, subtitle, tooltip));
     }
 
     /// <summary>
     /// Adds a date tile to the section
     /// </summary>
-    public static ReportSection AddDateTile(this ReportSection section, string title, DateOnly value, string? format = null, string? subtitle = null)
+    public static ReportSection AddDateTile(this ReportSection section, string title, DateOnly value, string? format = null, string? subtitle = null, string? tooltip = null)
     {
-        return section.AddElement(new DateTile(title, value, format, subtitle));
+        return section.AddElement(new DateTile(title, value, format, subtitle, tooltip));
     }
 
     /// <summary>
