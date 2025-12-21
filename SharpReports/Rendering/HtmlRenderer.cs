@@ -210,6 +210,13 @@ public class HtmlRenderer : IRenderer
         var borderColor = primaryColor.Replace("0.7)", "1)");
 
         sb.AppendLine($"                <div class=\"chart-container\">");
+        if (!string.IsNullOrEmpty(chart.Tooltip))
+        {
+            sb.AppendLine("                    <div class=\"chart-tooltip\">");
+            sb.AppendLine("                        <span class=\"tooltip-icon\">i</span>");
+            sb.AppendLine($"                        <div class=\"tooltip-content\">{EscapeHtml(chart.Tooltip)}</div>");
+            sb.AppendLine("                    </div>");
+        }
         sb.AppendLine($"                    <h3>{EscapeHtml(chart.Title)}</h3>");
         sb.AppendLine($"                    <canvas id=\"chart-{chartId}\"></canvas>");
         sb.AppendLine("                </div>");
@@ -244,6 +251,13 @@ public class HtmlRenderer : IRenderer
         var colors = GetChartColors();
 
         sb.AppendLine($"                <div class=\"chart-container\">");
+        if (!string.IsNullOrEmpty(chart.Tooltip))
+        {
+            sb.AppendLine("                    <div class=\"chart-tooltip\">");
+            sb.AppendLine("                        <span class=\"tooltip-icon\">i</span>");
+            sb.AppendLine($"                        <div class=\"tooltip-content\">{EscapeHtml(chart.Tooltip)}</div>");
+            sb.AppendLine("                    </div>");
+        }
         sb.AppendLine($"                    <h3>{EscapeHtml(chart.Title)}</h3>");
         sb.AppendLine($"                    <canvas id=\"chart-{chartId}\"></canvas>");
         sb.AppendLine("                </div>");
@@ -288,6 +302,13 @@ public class HtmlRenderer : IRenderer
         var colors = GetChartColors();
 
         sb.AppendLine($"                <div class=\"chart-container\">");
+        if (!string.IsNullOrEmpty(chart.Tooltip))
+        {
+            sb.AppendLine("                    <div class=\"chart-tooltip\">");
+            sb.AppendLine("                        <span class=\"tooltip-icon\">i</span>");
+            sb.AppendLine($"                        <div class=\"tooltip-content\">{EscapeHtml(chart.Tooltip)}</div>");
+            sb.AppendLine("                    </div>");
+        }
         sb.AppendLine($"                    <h3>{EscapeHtml(chart.Title)}</h3>");
         sb.AppendLine($"                    <canvas id=\"chart-{chartId}\"></canvas>");
         sb.AppendLine("                </div>");
@@ -337,6 +358,13 @@ public class HtmlRenderer : IRenderer
         var colors = GetChartColors();
 
         sb.AppendLine($"                <div class=\"chart-container\">");
+        if (!string.IsNullOrEmpty(chart.Tooltip))
+        {
+            sb.AppendLine("                    <div class=\"chart-tooltip\">");
+            sb.AppendLine("                        <span class=\"tooltip-icon\">i</span>");
+            sb.AppendLine($"                        <div class=\"tooltip-content\">{EscapeHtml(chart.Tooltip)}</div>");
+            sb.AppendLine("                    </div>");
+        }
         sb.AppendLine($"                    <h3>{EscapeHtml(chart.Title)}</h3>");
         sb.AppendLine($"                    <canvas id=\"chart-{chartId}\"></canvas>");
         sb.AppendLine("                </div>");
@@ -676,6 +704,7 @@ public class HtmlRenderer : IRenderer
 
         .chart-container {{
             padding: 1.25rem;
+            position: relative;
         }}
 
         .chart-container h3 {{
@@ -690,6 +719,73 @@ public class HtmlRenderer : IRenderer
         .chart-container canvas {{
             max-height: 350px;
             {transitionStyle}
+        }}
+
+        .chart-tooltip {{
+            position: absolute;
+            top: -0.75rem;
+            right: -0.5rem;
+            z-index: 10;
+        }}
+
+        .chart-tooltip .tooltip-icon {{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-style: normal;
+            cursor: help;
+            {transitionStyle}
+        }}
+
+        .chart-tooltip .tooltip-icon:hover {{
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+        }}
+
+        .chart-tooltip .tooltip-content {{
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            min-width: 200px;
+            max-width: 300px;
+            padding: 0.75rem;
+            background-color: var(--text-color);
+            color: var(--background-color);
+            font-size: 0.8125rem;
+            font-weight: 400;
+            line-height: 1.5;
+            border-radius: var(--border-radius-sm);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            {transitionStyle}
+            pointer-events: none;
+            white-space: normal;
+            text-align: left;
+        }}
+
+        .chart-tooltip .tooltip-content::before {{
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            right: 0.5rem;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid var(--text-color);
+        }}
+
+        .chart-tooltip .tooltip-icon:hover + .tooltip-content {{
+            opacity: 1;
+            visibility: visible;
         }}
 
         .report-footer {{

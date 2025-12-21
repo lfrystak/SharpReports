@@ -65,13 +65,13 @@ var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
 
     .AddSection("Revenue Analysis", section => section
         .SetColumns(2)
-        .AddBarChart("Revenue by Region", salesByRegion)
-        .AddLineChart("Monthly Revenue Trend", monthlyRevenue))
+        .AddBarChart("Revenue by Region", salesByRegion, tooltip: "Revenue distribution across our four main geographic markets for Q2 2024")
+        .AddLineChart("Monthly Revenue Trend", monthlyRevenue, tooltip: "Month-over-month revenue progression showing steady growth throughout the quarter"))
 
     .AddSection("Product & Growth", section => section
         .SetColumns(2)
-        .AddPieChart("Product Mix (%)", productMix, isDonut: true)
-        .AddStackedBarChart("Quarterly Performance", quarterlyGrowth))
+        .AddPieChart("Product Mix (%)", productMix, isDonut: true, tooltip: "Percentage breakdown of revenue by product tier - Enterprise, Professional, and Starter packages")
+        .AddStackedBarChart("Quarterly Performance", quarterlyGrowth, tooltip: "Comparison of revenue vs costs for Q1 and Q2, showing improved profit margins"))
 
     .AddSection("Top Customers", section => section
         .AddTable("Q2 Top Revenue Contributors", topCustomers))

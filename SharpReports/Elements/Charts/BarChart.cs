@@ -17,16 +17,16 @@ public class BarChart : ChartBase
     /// </summary>
     public bool IsHorizontal { get; }
 
-    public BarChart(string title, IDictionary<string, double> data, bool isHorizontal = false)
-        : base(title)
+    public BarChart(string title, IDictionary<string, double> data, bool isHorizontal = false, string? tooltip = null)
+        : base(title, tooltip)
     {
         if (data == null) throw new ArgumentNullException(nameof(data));
         Data = data is Dictionary<string, double> dict ? dict : new Dictionary<string, double>(data);
         IsHorizontal = isHorizontal;
     }
 
-    public BarChart(string title, IDictionary<string, int> data, bool isHorizontal = false)
-        : base(title)
+    public BarChart(string title, IDictionary<string, int> data, bool isHorizontal = false, string? tooltip = null)
+        : base(title, tooltip)
     {
         if (data == null) throw new ArgumentNullException(nameof(data));
         Data = data.ToDictionary(kvp => kvp.Key, kvp => (double)kvp.Value);

@@ -17,8 +17,8 @@ public class LineChart : ChartBase
     /// </summary>
     public bool ShowPoints { get; }
 
-    public LineChart(string title, IDictionary<string, IDictionary<string, double>> series, bool showPoints = true)
-        : base(title)
+    public LineChart(string title, IDictionary<string, IDictionary<string, double>> series, bool showPoints = true, string? tooltip = null)
+        : base(title, tooltip)
     {
         if (series == null) throw new ArgumentNullException(nameof(series));
         Series = series.ToDictionary(
@@ -31,8 +31,8 @@ public class LineChart : ChartBase
     /// <summary>
     /// Alternative constructor for single series
     /// </summary>
-    public LineChart(string title, IDictionary<string, double> data, bool showPoints = true)
-        : base(title)
+    public LineChart(string title, IDictionary<string, double> data, bool showPoints = true, string? tooltip = null)
+        : base(title, tooltip)
     {
         if (data == null)
             throw new ArgumentNullException(nameof(data));

@@ -60,72 +60,72 @@ public static class ReportSectionExtensions
     /// <summary>
     /// Adds a bar chart to the section
     /// </summary>
-    public static ReportSection AddBarChart(this ReportSection section, string title, IDictionary<string, double> data, bool isHorizontal = false)
+    public static ReportSection AddBarChart(this ReportSection section, string title, IDictionary<string, double> data, bool isHorizontal = false, string? tooltip = null)
     {
-        return section.AddElement(new BarChart(title, data, isHorizontal));
+        return section.AddElement(new BarChart(title, data, isHorizontal, tooltip));
     }
 
     /// <summary>
     /// Adds a bar chart to the section
     /// </summary>
-    public static ReportSection AddBarChart(this ReportSection section, string title, IDictionary<string, int> data, bool isHorizontal = false)
+    public static ReportSection AddBarChart(this ReportSection section, string title, IDictionary<string, int> data, bool isHorizontal = false, string? tooltip = null)
     {
-        return section.AddElement(new BarChart(title, data, isHorizontal));
+        return section.AddElement(new BarChart(title, data, isHorizontal, tooltip));
     }
 
     /// <summary>
     /// Adds a stacked bar chart to the section
     /// </summary>
-    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, double>> data, bool isHorizontal = false)
+    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, double>> data, bool isHorizontal = false, string? tooltip = null)
     {
-        return section.AddElement(new StackedBarChart(title, data, isHorizontal));
+        return section.AddElement(new StackedBarChart(title, data, isHorizontal, tooltip));
     }
 
     /// <summary>
     /// Adds a stacked bar chart to the section
     /// </summary>
-    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, int>> data, bool isHorizontal = false)
+    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, int>> data, bool isHorizontal = false, string? tooltip = null)
     {
-        return section.AddElement(new StackedBarChart(title, data, isHorizontal));
+        return section.AddElement(new StackedBarChart(title, data, isHorizontal, tooltip));
     }
 
     /// <summary>
     /// Adds a simple stacked bar chart to the section
     /// </summary>
-    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, int> data, bool isHorizontal = false)
+    public static ReportSection AddStackedBarChart(this ReportSection section, string title, IDictionary<string, int> data, bool isHorizontal = false, string? tooltip = null)
     {
-        return section.AddElement(new StackedBarChart(title, data, isHorizontal));
+        return section.AddElement(new StackedBarChart(title, data, isHorizontal, tooltip));
     }
 
     /// <summary>
     /// Adds a line chart to the section
     /// </summary>
-    public static ReportSection AddLineChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, double>> series, bool showPoints = true)
+    public static ReportSection AddLineChart(this ReportSection section, string title, IDictionary<string, IDictionary<string, double>> series, bool showPoints = true, string? tooltip = null)
     {
-        return section.AddElement(new LineChart(title, series, showPoints));
+        return section.AddElement(new LineChart(title, series, showPoints, tooltip));
     }
 
     /// <summary>
     /// Adds a single-series line chart to the section
     /// </summary>
-    public static ReportSection AddLineChart(this ReportSection section, string title, IDictionary<string, double> data, bool showPoints = true)
+    public static ReportSection AddLineChart(this ReportSection section, string title, IDictionary<string, double> data, bool showPoints = true, string? tooltip = null)
     {
-        return section.AddElement(new LineChart(title, data, showPoints));
+        return section.AddElement(new LineChart(title, data, showPoints, tooltip));
     }
 
     /// <summary>
     /// Adds a pie chart to the section
     /// </summary>
-    public static ReportSection AddPieChart(this ReportSection section, string title, IDictionary<string, double> data, bool isDonut = false)
+    public static ReportSection AddPieChart(this ReportSection section, string title, IDictionary<string, double> data, bool isDonut = false, string? tooltip = null)
     {
-        return section.AddElement(new PieChart(title, data, isDonut));
+        return section.AddElement(new PieChart(title, data, isDonut, tooltip));
     }
 
     /// <summary>
     /// Adds a pie chart to the section
     /// </summary>
-    public static ReportSection AddPieChart(this ReportSection section, string title, IDictionary<string, int> data, bool isDonut = false)
+    public static ReportSection AddPieChart(this ReportSection section, string title, IDictionary<string, int> data, bool isDonut = false, string? tooltip = null)
     {
-        return section.AddElement(new PieChart(title, data, isDonut));
+        return section.AddElement(new PieChart(title, data, isDonut, tooltip));
     }
 }
