@@ -58,9 +58,9 @@ public class BasicExample
         var report = ReportBuilder.WithTitle("Q2 2024 Sales Report")
             .AddSection("Executive Summary", section => section
                 .SetColumns(3)
-                .AddNumberTile("Total Revenue", 176000, "C0")
-                .AddNumberTile("Total Orders", 1247, "N0")
-                .AddNumberTile("Avg Order Value", 141.14, "C2", "↑ 12% vs Q1"))
+                .AddNumberTile("Total Revenue", 176000, "C0", tooltip: "Total revenue from all regions for Q2 2024")
+                .AddNumberTile("Total Orders", 1247, "N0", tooltip: "Number of orders received during the quarter")
+                .AddNumberTile("Avg Order Value", 141.14, "C2", "↑ 12% vs Q1", "Average value per order compared to previous quarter"))
 
             .AddSection("Important Dates", section => section
                 .SetColumns(3)
@@ -70,20 +70,29 @@ public class BasicExample
 
             .AddSection("Sales by Region", section => section
                 .SetColumns(2)
-                .AddBarChart("Regional Performance", salesByRegion)
-                .AddPieChart("Market Distribution", salesByRegion))
+                .AddBarChart("Regional Performance", salesByRegion, tooltip: "Revenue by geographic region for Q2 2024")
+                .AddPieChart("Market Distribution", salesByRegion, tooltip: "Percentage breakdown of sales across regions"))
 
             .AddSection("Product Performance", section => section
                 .SetColumns(2)
-                .AddStackedBarChart("Quarterly Product Sales", productSales)
-                .AddLineChart("Monthly Revenue Trend", monthlyTrend))
+                .AddStackedBarChart("Quarterly Product Sales", productSales, tooltip: "Product performance comparison across quarters")
+                .AddLineChart("Monthly Revenue Trend", monthlyTrend, tooltip: "Month-over-month revenue progression"))
 
             .AddSection("Market Analysis", section => section
                 .SetColumns(2)
-                .AddPieChart("Market Share (%)", marketShare, isDonut: true)
+                .AddPieChart("Market Share (%)", marketShare, isDonut: true, tooltip: "Our market share compared to competitors")
                 .AddText("The market shows strong growth potential with our product " +
                          "maintaining a leading position. Focus on expanding in the " +
                          "South region where we see the most opportunity."))
+
+            .AddSection("Canvas Example - Flexible Layout", section => section
+                .SetColumnWidths(1, 2)  // 1:2 ratio = 33.33% / 66.67%
+                .AddCanvas(2, canvas => canvas
+                    .AddNumberTile("Active Customers", 342, "N0", tooltip: "Currently active customer accounts")
+                    .AddDateTile("Last Updated", DateTime.Now, "yyyy-MM-dd HH:mm")
+                    .AddNumberTile("New This Month", 28, "N0")
+                    .AddBarChart("Quick Stats", new Dictionary<string, int> { ["Won"] = 15, ["Lost"] = 3, ["Pending"] = 8 }))
+                .AddLineChart("Customer Growth", monthlyTrend, tooltip: "Customer acquisition trend over time"))
 
             .AddSection("Top Performers", section => section
                 .AddTable("Sales Team Performance", tableData))
@@ -108,13 +117,17 @@ public class BasicExample
                 .AddNumberTile("Revenue", 50000, "C0"))
             .GenerateHtml();
 
-        // Save with custom theme
+        // Save with custom theme (including new theme properties)
         var customTheme = new Theme
         {
             PrimaryColor = "#10b981",
             SecondaryColor = "#6366f1",
             BackgroundColor = "#ffffff",
-            TextColor = "#111827"
+            TextColor = "#111827",
+            BorderRadius = "12px",
+            ShadowIntensity = 0.1,
+            EnableAnimations = true,
+            EnableGradients = true
         };
 
         await ReportBuilder.WithTitle("Custom Themed Report")

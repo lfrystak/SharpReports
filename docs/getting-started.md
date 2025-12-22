@@ -50,7 +50,7 @@ var report = ReportBuilder.WithTitle("Dashboard")
         .AddNumberTile("Revenue", 50000, "C0")      // Currency format
         .AddNumberTile("Orders", 1234, "N0")        // Number format
         .AddNumberTile("Conversion", 0.156, "P1")   // Percentage format
-        .AddNumberTile("Rating", 4.7, "N1"))        // Decimal format
+        .AddNumberTile("Rating", 4.7, "N1", subtitle: "out of 5.0", tooltip: "Average customer rating"))  // With tooltip
     .GenerateHtml();
 ```
 
@@ -110,7 +110,33 @@ var report = ReportBuilder.WithTitle("Employee Report")
     .GenerateHtml();
 ```
 
-### 5. Multiple Sections with Different Layouts
+### 5. Using Canvas for Flexible Layouts
+
+The Canvas element lets you mix different types of elements in custom layouts:
+
+```csharp
+var report = ReportBuilder.WithTitle("Flexible Report")
+    // Custom column widths: 1:2 ratio means 33.33% / 66.67%
+    .AddSection("Mixed Layout", section => section
+        .SetColumnWidths(1, 2)
+        .AddCanvas(2, canvas => canvas  // Left column: Canvas with 2 internal columns
+            .AddNumberTile("Active Users", 1234, "N0")
+            .AddBarChart("Daily Stats", dailyData)
+            .AddNumberTile("New Signups", 45, "N0")
+            .AddDateTile("Last Update", DateTime.Now))
+        .AddPieChart("Distribution", distributionData))  // Right column: Large chart
+
+    // Equal width columns using unit ratios
+    .AddSection("Three Columns", section => section
+        .SetColumnWidths(1, 1, 1)  // Each column gets 33.33% width
+        .AddCanvas(1, canvas => canvas.AddNumberTile("Total", 500))
+        .AddCanvas(1, canvas => canvas.AddNumberTile("Active", 342))
+        .AddCanvas(1, canvas => canvas.AddNumberTile("Pending", 158)))
+
+    .GenerateHtml();
+```
+
+### 6. Multiple Sections with Different Layouts
 
 ```csharp
 var report = ReportBuilder.WithTitle("Comprehensive Report")
@@ -122,8 +148,8 @@ var report = ReportBuilder.WithTitle("Comprehensive Report")
 
     .AddSection("Charts", s => s
         .SetColumns(2)
-        .AddBarChart("Chart 1", data1)
-        .AddPieChart("Chart 2", data2))
+        .AddBarChart("Chart 1", data1, tooltip: "Hover for details")
+        .AddPieChart("Chart 2", data2, tooltip: "Click to expand"))
 
     .AddSection("Details", s => s
         .SetColumns(1)
@@ -244,10 +270,13 @@ await report.SaveJsonAsync("api-report.json");
 
 1. **Use appropriate columns**: 3-4 columns work well for metrics, 1-2 for charts
 2. **Format numbers**: Always specify format strings for better presentation
-3. **Add context**: Use subtitles on number tiles to add context
-4. **Section organization**: Group related data into sections
-5. **Responsive design**: Reports automatically adapt to mobile devices
-6. **Save both formats**: HTML for viewing, JSON for data processing
+3. **Add context**: Use subtitles and tooltips on tiles to provide additional information
+4. **Use tooltips**: Add helpful tooltips to charts and tiles for extra context
+5. **Canvas for flexibility**: Use Canvas when you need mixed layouts with different element types
+6. **Custom column widths**: Use unit ratios (e.g., `1, 2, 1`) instead of percentages for intuitive layouts
+7. **Section organization**: Group related data into sections
+8. **Responsive design**: Reports automatically adapt to mobile devices
+9. **Save both formats**: HTML for viewing, JSON for data processing
 
 ## Support
 
