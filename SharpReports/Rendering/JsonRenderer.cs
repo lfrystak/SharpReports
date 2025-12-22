@@ -108,6 +108,13 @@ public class JsonRenderer : IRenderer
                 data = chart.Data,
                 isDonut = chart.IsDonut
             },
+            Canvas canvas => new
+            {
+                type = "Canvas",
+                id = canvas.Id,
+                columns = canvas.Columns,
+                elements = canvas.Elements.Select(e => SerializeElement(e)).ToList()
+            },
             _ => new
             {
                 type = element.ElementType,

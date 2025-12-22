@@ -72,7 +72,20 @@ public class HtmlRenderer : IRenderer
     {
         sb.AppendLine($"    <div class=\"section\">");
         sb.AppendLine($"        <h2>{EscapeHtml(section.Title)}</h2>");
-        sb.AppendLine($"        <div class=\"grid grid-cols-{section.Columns}\">");
+
+        // Use custom column widths if specified, otherwise use equal-width grid
+        if (section.ColumnWidths != null && section.ColumnWidths.Count > 0)
+        {
+            // Calculate percentages from unit values
+            var totalUnits = section.ColumnWidths.Sum();
+            var percentages = section.ColumnWidths.Select(w => (double)w / totalUnits * 100);
+            var gridTemplate = string.Join(" ", percentages.Select(p => p.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) + "%"));
+            sb.AppendLine($"        <div class=\"grid\" style=\"grid-template-columns: {gridTemplate};\">");
+        }
+        else
+        {
+            sb.AppendLine($"        <div class=\"grid grid-cols-{section.Columns}\">");
+        }
 
         foreach (var element in section.Elements)
         {
@@ -112,6 +125,9 @@ public class HtmlRenderer : IRenderer
                 break;
             case PieChart pieChart:
                 RenderPieChart(sb, pieChart);
+                break;
+            case Canvas canvas:
+                RenderCanvas(sb, canvas);
                 break;
             default:
                 sb.AppendLine($"                <p>Unknown element type: {element.ElementType}</p>");
@@ -395,6 +411,60 @@ public class HtmlRenderer : IRenderer
         sb.AppendLine("                </script>");
     }
 
+    private void RenderCanvas(StringBuilder sb, Canvas canvas)
+    {
+        // Render canvas container - always fills 100% of its section column
+        sb.AppendLine($"                <div class=\"canvas-container\">");
+        sb.AppendLine($"                    <div class=\"canvas-grid grid-cols-{canvas.Columns}\">");
+
+        // Render each element in the canvas
+        foreach (var element in canvas.Elements)
+        {
+            sb.AppendLine("                        <div class=\"canvas-element element\">");
+            RenderCanvasElement(sb, element);
+            sb.AppendLine("                        </div>");
+        }
+
+        sb.AppendLine("                    </div>");
+        sb.AppendLine("                </div>");
+    }
+
+    private void RenderCanvasElement(StringBuilder sb, IReportElement element)
+    {
+        // Render the element content without the wrapping div
+        // This is similar to RenderElement but without the outer element div
+        switch (element)
+        {
+            case NumberTile tile:
+                RenderNumberTile(sb, tile);
+                break;
+            case DateTile dateTile:
+                RenderDateTile(sb, dateTile);
+                break;
+            case FreeText text:
+                RenderFreeText(sb, text);
+                break;
+            case Table table:
+                RenderTable(sb, table);
+                break;
+            case BarChart barChart:
+                RenderBarChart(sb, barChart);
+                break;
+            case StackedBarChart stackedBarChart:
+                RenderStackedBarChart(sb, stackedBarChart);
+                break;
+            case LineChart lineChart:
+                RenderLineChart(sb, lineChart);
+                break;
+            case PieChart pieChart:
+                RenderPieChart(sb, pieChart);
+                break;
+            default:
+                sb.AppendLine($"                        <p>Unknown element type: {element.ElementType}</p>");
+                break;
+        }
+    }
+
     private string GenerateCss(Theme theme)
     {
         var shadowStyle = GetShadowStyle(theme.ShadowIntensity);
@@ -500,17 +570,51 @@ public class HtmlRenderer : IRenderer
         .grid-cols-3 {{ grid-template-columns: repeat(3, 1fr); }}
         .grid-cols-4 {{ grid-template-columns: repeat(4, 1fr); }}
 
+        .canvas-container {{
+            width: 100%;
+            {transitionStyle}
+        }}
+
+        .canvas-grid {{
+            display: grid;
+            gap: 1.5rem;
+        }}
+
+        .canvas-grid.grid-cols-1 {{ grid-template-columns: repeat(1, 1fr); }}
+        .canvas-grid.grid-cols-2 {{ grid-template-columns: repeat(2, 1fr); }}
+        .canvas-grid.grid-cols-3 {{ grid-template-columns: repeat(3, 1fr); }}
+        .canvas-grid.grid-cols-4 {{ grid-template-columns: repeat(4, 1fr); }}
+
+        .canvas-element {{
+            background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #e2e8f0;
+            {transitionStyle}
+            overflow: hidden;
+        }}
+
+        .canvas-element:hover {{
+            border-color: #cbd5e1;
+            {(theme.EnableAnimations ? "transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);" : "")}
+        }}
+
         @media (max-width: 1280px) {{
             .grid-cols-4 {{ grid-template-columns: repeat(3, 1fr); }}
+            .canvas-grid.grid-cols-4 {{ grid-template-columns: repeat(3, 1fr); }}
         }}
 
         @media (max-width: 1024px) {{
             .grid-cols-4 {{ grid-template-columns: repeat(2, 1fr); }}
             .grid-cols-3 {{ grid-template-columns: repeat(2, 1fr); }}
+            .canvas-grid.grid-cols-4 {{ grid-template-columns: repeat(2, 1fr); }}
+            .canvas-grid.grid-cols-3 {{ grid-template-columns: repeat(2, 1fr); }}
         }}
 
         @media (max-width: 768px) {{
             .grid {{ grid-template-columns: 1fr !important; }}
+            .canvas-grid {{ grid-template-columns: 1fr !important; }}
+            .canvas-container {{ width: 100% !important; }}
         }}
 
         .element {{

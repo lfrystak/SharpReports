@@ -128,4 +128,19 @@ public static class ReportSectionExtensions
     {
         return section.AddElement(new PieChart(title, data, isDonut, tooltip));
     }
+
+    /// <summary>
+    /// Adds a canvas to the section. Canvas will fill 100% of its section column.
+    /// Use SetColumnWidths() on the section to control the canvas width.
+    /// </summary>
+    /// <param name="section">The section to add the canvas to</param>
+    /// <param name="columns">Number of columns in the canvas. Elements will auto-flow across these columns.</param>
+    /// <param name="configure">Action to configure the canvas by adding elements</param>
+    /// <returns>The section for method chaining</returns>
+    public static ReportSection AddCanvas(this ReportSection section, int columns, Action<Canvas> configure)
+    {
+        var canvas = new Canvas(columns);
+        configure(canvas);
+        return section.AddElement(canvas);
+    }
 }
