@@ -7,10 +7,10 @@
     <AssemblyName>SharpReports</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>SharpReports</PackageId>
-    <Version>0.0.0</Version>
-    <AssemblyVersion>0.0.0</AssemblyVersion>
-    <FileVersion>0.0.0</FileVersion>
-    <InformationalVersion>0.0.0</InformationalVersion>
+    <Version>0.0</Version>
+    <AssemblyVersion>0.0</AssemblyVersion>
+    <FileVersion>0.0</FileVersion>
+    <InformationalVersion>0.0</InformationalVersion>
     <Authors>SharpReports Contributors</Authors>
     <Description>A lightweight, fluent C# library for generating beautiful HTML reports with charts, tables, and metrics.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
