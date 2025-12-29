@@ -102,6 +102,11 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
     - name: Download build artifacts - nuget
       uses: actions/download-artifact@v7
       with:
@@ -120,6 +125,18 @@ jobs:
         echo "VERSION=$VERSION" >> $GITHUB_ENV
         echo "Creating release for version: $VERSION"
 
+    - name: Generate Changelog
+      run: |
+        PREVIOUS_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+        if [ -z "$PREVIOUS_TAG" ]; then
+          CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges)
+        else
+          CHANGELOG=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+        fi
+        echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+        echo "$CHANGELOG" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2
       with:
@@ -131,6 +148,10 @@ jobs:
           ### 📦 NuGet Package
           This release includes the NuGet package for SharpReports - a lightweight, fluent C# library for generating beautiful HTML reports with charts, tables, and metrics.
 
+          ### 🔄 Changes
+          ${{ env.CHANGELOG }}
+
+          ### 📥 Installation
           You can install it using:
           ```bash
           dotnet add package SharpReports --version ${{ env.VERSION }}
