@@ -1,0 +1,149 @@
+name: Build and Release App with NuGet Package
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  NUGET_PACKAGE_NAME: SharpReports
+  CSPROJ_PATH: SharpReports/SharpReports.csproj
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Set version with run number
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        # Get major.minor from csproj (e.g., "0.0")
+        BASE_VERSION=$(grep -o '<Version>.*</Version>' ${{ env.CSPROJ_PATH }} | sed 's/<Version>\(.*\)<\/Version>/\1/')
+        # Append build number to create final version (e.g., "0.0.123")
+        VERSION="$BASE_VERSION.${{ github.run_number }}"
+        echo "Building release version: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+        # Update all version fields in csproj
+        sed -i "s/<Version>.*<\/Version>/<Version>$VERSION<\/Version>/g" ${{ env.CSPROJ_PATH }}
+        sed -i "s/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>$VERSION<\/AssemblyVersion>/g" ${{ env.CSPROJ_PATH }}
+        sed -i "s/<FileVersion>.*<\/FileVersion>/<FileVersion>$VERSION<\/FileVersion>/g" ${{ env.CSPROJ_PATH }}
+        sed -i "s/<InformationalVersion>.*<\/InformationalVersion>/<InformationalVersion>$VERSION<\/InformationalVersion>/g" ${{ env.CSPROJ_PATH }}
+
+    - name: Save version to artifact
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: echo "${{ env.VERSION }}" > ./version.txt
+
+    - name: Upload version artifact
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v6
+      with:
+        name: version
+        path: ./version.txt
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Test
+      run: dotnet test --no-build --configuration Release --verbosity normal
+
+    - name: Pack
+      run: dotnet pack --no-build --configuration Release --output ./nupkgs
+
+    - name: Upload build artifacts - nuget
+      uses: actions/upload-artifact@v6
+      with:
+        name: nuget-packages
+        path: ./nupkgs/*.nupkg
+        retention-days: 14
+
+  publish-nuget:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v7
+      with:
+        name: nuget-packages
+        path: ./nupkgs
+
+    - name: Publish to GitHub Packages
+      run: |
+        dotnet nuget push "./nupkgs/*.nupkg" \
+          --source https://nuget.pkg.github.com/lfrystak/index.json \
+          --api-key ${{ secrets.PUBLISH_PACKAGES }}
+
+  create-release:
+    needs:
+    - publish-nuget
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Download build artifacts - nuget
+      uses: actions/download-artifact@v7
+      with:
+        name: nuget-packages
+        path: ./nupkgs
+
+    - name: Download version artifact
+      uses: actions/download-artifact@v7
+      with:
+        name: version
+        path: ./
+
+    - name: Read version
+      run: |
+        VERSION=$(cat version.txt)
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "Creating release for version: $VERSION"
+
+    - name: Create Release and Upload Assets
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ env.VERSION }}
+        name: Release v${{ env.VERSION }}
+        body: |
+          ## SharpReports v${{ env.VERSION }}
+
+          ### 📦 NuGet Package
+          This release includes the NuGet package for SharpReports - a lightweight, fluent C# library for generating beautiful HTML reports with charts, tables, and metrics.
+
+          You can install it using:
+          ```bash
+          dotnet add package SharpReports --version ${{ env.VERSION }}
+          ```
+
+          ### 📁 Assets
+          - `SharpReports.${{ env.VERSION }}.nupkg` - Main NuGet package
+
+          ---
+          *Built from commit ${{ github.sha }}*
+        files: |
+          ./nupkgs/*.nupkg
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.PUBLISH_PACKAGES }} 
