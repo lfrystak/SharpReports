@@ -52,9 +52,9 @@ var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
     .WithLogo("https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany")
     .AddSection("Key Metrics", section => section
         .SetColumns(4)
-        .AddNumberTile("Total Revenue", 432000, "C0")
-        .AddNumberTile("New Customers", 47, "N0")
-        .AddNumberTile("Growth Rate", 0.198, "P1", "↑ vs Q1")
+        .AddNumberTile("Total Revenue", 432000, "C0", tooltip: "Total revenue from all regions and product lines for Q2 2024")
+        .AddNumberTile("New Customers", 47, "N0", tooltip: "Number of new customer accounts opened during this quarter")
+        .AddNumberTile("Growth Rate", 0.198, "P1", "↑ vs Q1", "Year-over-year growth compared to the same quarter last year")
         .AddNumberTile("Customer Satisfaction", 4.7, "N1", "out of 5.0"))
 
     .AddSection("Timeline", section => section
@@ -65,16 +65,25 @@ var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
 
     .AddSection("Revenue Analysis", section => section
         .SetColumns(2)
-        .AddBarChart("Revenue by Region", salesByRegion)
-        .AddLineChart("Monthly Revenue Trend", monthlyRevenue))
+        .AddBarChart("Revenue by Region", salesByRegion, tooltip: "Revenue distribution across our four main geographic markets for Q2 2024")
+        .AddLineChart("Monthly Revenue Trend", monthlyRevenue, tooltip: "Month-over-month revenue progression showing steady growth throughout the quarter"))
 
     .AddSection("Product & Growth", section => section
         .SetColumns(2)
-        .AddPieChart("Product Mix (%)", productMix, isDonut: true)
-        .AddStackedBarChart("Quarterly Performance", quarterlyGrowth))
+        .AddPieChart("Product Mix (%)", productMix, isDonut: true, tooltip: "Percentage breakdown of revenue by product tier - Enterprise, Professional, and Starter packages")
+        .AddStackedBarChart("Quarterly Performance", quarterlyGrowth, tooltip: "Comparison of revenue vs costs for Q1 and Q2, showing improved profit margins"))
 
     .AddSection("Top Customers", section => section
         .AddTable("Q2 Top Revenue Contributors", topCustomers))
+
+    .AddSection("Canvas Example - Mixed Layout", section => section
+        .SetColumnWidths(1, 2)  // 1:2 ratio = 33.33% / 66.67%
+        .AddCanvas(2, canvas => canvas
+            .AddNumberTile("Canvas Demo", 100, "N0", "This is in a canvas!")
+            .AddBarChart("Sample Chart", new Dictionary<string, double> { ["A"] = 10, ["B"] = 20, ["C"] = 15 })
+            .AddNumberTile("Another Tile", 42, "N0")
+            .AddDateTile("Today", DateTime.Now, "MMMM dd, yyyy"))
+        .AddPieChart("Sample Pie", new Dictionary<string, double> { ["X"] = 30, ["Y"] = 40, ["Z"] = 30 }, isDonut: true))
 
     .AddSection("Summary", section => section
         .AddText(@"Q2 2024 showed strong performance across all regions with total revenue of $432,000,

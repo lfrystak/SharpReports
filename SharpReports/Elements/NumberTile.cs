@@ -27,12 +27,18 @@ public class NumberTile : ReportElementBase
     /// </summary>
     public string? Subtitle { get; }
 
-    public NumberTile(string title, double value, string? format = null, string? subtitle = null)
+    /// <summary>
+    /// Gets the optional tooltip text shown on hover
+    /// </summary>
+    public string? Tooltip { get; }
+
+    public NumberTile(string title, double value, string? format = null, string? subtitle = null, string? tooltip = null)
     {
         Title = title ?? throw new ArgumentNullException(nameof(title));
         Value = value;
         Format = format;
         Subtitle = subtitle;
+        Tooltip = tooltip;
     }
 
     /// <summary>
