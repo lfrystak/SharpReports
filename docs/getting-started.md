@@ -228,6 +228,35 @@ section.AddNumberTile("Count", 1234, "N0")         // 1,234
 section.AddNumberTile("Rate", 0.123, "P1")         // 12.3%
 ```
 
+## Locale / Culture Support
+
+By default, numbers and dates are formatted using `InvariantCulture` for consistent output across all systems. To format values for a specific locale, use `WithCulture()`:
+
+```csharp
+using System.Globalization;
+
+// German formatting
+var report = ReportBuilder.WithTitle("Verkaufsbericht")
+    .WithCulture("de-DE")
+    .AddSection("Kennzahlen", section => section
+        .AddNumberTile("Umsatz", 1234.56, "N2")    // → 1.234,56
+        .AddNumberTile("Preis", 99.99, "C2")       // → 99,99 €
+        .AddDateTile("Datum", DateTime.Now))       // → 31.01.2026
+    .Build();
+
+// French formatting
+var report = ReportBuilder.WithTitle("Rapport")
+    .WithCulture("fr-FR")
+    .AddSection("Données", section => section
+        .AddNumberTile("Valeur", 1234.56, "N2"))   // → 1 234,56
+    .Build();
+
+// Use system's current culture
+var report = ReportBuilder.WithTitle("Report")
+    .WithCulture(CultureInfo.CurrentCulture)
+    .Build();
+```
+
 ## Real-World Example: API Data Processing
 
 ```csharp

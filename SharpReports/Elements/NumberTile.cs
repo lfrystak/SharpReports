@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace SharpReports.Elements;
 
 /// <summary>
@@ -42,10 +44,21 @@ public class NumberTile : ReportElementBase
     }
 
     /// <summary>
-    /// Gets the formatted value string
+    /// Gets the formatted value string using InvariantCulture
     /// </summary>
     public string GetFormattedValue()
     {
-        return Format != null ? Value.ToString(Format) : Value.ToString("N0");
+        return GetFormattedValue(CultureInfo.InvariantCulture);
+    }
+
+    /// <summary>
+    /// Gets the formatted value string using the specified culture
+    /// </summary>
+    /// <param name="culture">The culture to use for formatting</param>
+    public string GetFormattedValue(CultureInfo culture)
+    {
+        return Format != null
+            ? Value.ToString(Format, culture)
+            : Value.ToString("N0", culture);
     }
 }

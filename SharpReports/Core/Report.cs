@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace SharpReports.Core;
 
 /// <summary>
@@ -29,6 +31,12 @@ public class Report
     /// Gets the report generation timestamp
     /// </summary>
     public DateTime GeneratedAt { get; } = DateTime.UtcNow;
+
+    /// <summary>
+    /// Gets the culture used for formatting numbers and dates.
+    /// Defaults to InvariantCulture for consistent, locale-independent output.
+    /// </summary>
+    public CultureInfo Culture { get; internal set; } = CultureInfo.InvariantCulture;
 
     public Report(string title)
     {
