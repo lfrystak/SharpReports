@@ -10,7 +10,7 @@ A lightweight .NET library for generating beautiful HTML and JSON reports with c
 - **Custom column widths** using intuitive unit-based ratios
 - Data tables and metric tiles
 - **Tooltips** for tiles and charts
-- Date and number formatting
+- Date and number formatting with locale support
 - Customizable themes with modern design
 - Fluent API design
 - Zero dependencies (Chart.js loaded via CDN for HTML output)
@@ -138,6 +138,23 @@ var theme = new Theme
 };
 
 var html = report.GenerateHtml(theme);
+```
+
+### Locale/Culture Support
+By default, numbers and dates are formatted using `InvariantCulture` for consistent output across all systems. Use `WithCulture()` to format values for a specific locale:
+```csharp
+using System.Globalization;
+
+// German formatting: 1.234,56 for numbers, dd.MM.yyyy for dates
+var report = ReportBuilder.WithTitle("Verkaufsbericht")
+    .WithCulture("de-DE")
+    .AddSection("Kennzahlen", section => section
+        .AddNumberTile("Umsatz", 1234.56, "N2")    // → 1.234,56
+        .AddDateTile("Datum", DateTime.Now))       // → 31.01.2026
+    .Build();
+
+// Or use CultureInfo directly
+.WithCulture(CultureInfo.CurrentCulture)
 ```
 
 ## Documentation

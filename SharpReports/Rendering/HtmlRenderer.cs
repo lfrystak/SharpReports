@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using SharpReports.Core;
 using SharpReports.Elements;
@@ -11,11 +12,13 @@ namespace SharpReports.Rendering;
 public class HtmlRenderer : IRenderer
 {
     private Theme? _currentTheme;
+    private CultureInfo _currentCulture = CultureInfo.InvariantCulture;
 
     public string Render(Report report, Theme? theme = null)
     {
         theme ??= Theme.Default;
         _currentTheme = theme;
+        _currentCulture = report.Culture;
         var sb = new StringBuilder();
 
         // HTML structure
@@ -148,7 +151,7 @@ public class HtmlRenderer : IRenderer
             sb.AppendLine("                    </div>");
         }
         sb.AppendLine($"                    <div class=\"tile-title\">{EscapeHtml(tile.Title)}</div>");
-        sb.AppendLine($"                    <div class=\"tile-value\">{EscapeHtml(tile.GetFormattedValue())}</div>");
+        sb.AppendLine($"                    <div class=\"tile-value\">{EscapeHtml(tile.GetFormattedValue(_currentCulture))}</div>");
         if (!string.IsNullOrEmpty(tile.Subtitle))
         {
             sb.AppendLine($"                    <div class=\"tile-subtitle\">{EscapeHtml(tile.Subtitle)}</div>");
@@ -167,7 +170,7 @@ public class HtmlRenderer : IRenderer
             sb.AppendLine("                    </div>");
         }
         sb.AppendLine($"                    <div class=\"tile-title\">{EscapeHtml(tile.Title)}</div>");
-        sb.AppendLine($"                    <div class=\"tile-value\">{EscapeHtml(tile.GetFormattedValue())}</div>");
+        sb.AppendLine($"                    <div class=\"tile-value\">{EscapeHtml(tile.GetFormattedValue(_currentCulture))}</div>");
         if (!string.IsNullOrEmpty(tile.Subtitle))
         {
             sb.AppendLine($"                    <div class=\"tile-subtitle\">{EscapeHtml(tile.Subtitle)}</div>");
@@ -208,7 +211,7 @@ public class HtmlRenderer : IRenderer
             sb.AppendLine("                            <tr>");
             foreach (var col in table.Columns)
             {
-                var value = row.ContainsKey(col) ? row[col]?.ToString() ?? "" : "";
+                var value = row.ContainsKey(col) ? FormatValue(row[col]) : "";
                 sb.AppendLine($"                                <td>{EscapeHtml(value)}</td>");
             }
             sb.AppendLine("                            </tr>");
@@ -1005,12 +1008,12 @@ public class HtmlRenderer : IRenderer
 
     private string ToJsonArray(IEnumerable<double> items)
     {
-        return "[" + string.Join(", ", items) + "]";
+        return "[" + string.Join(", ", items.Select(x => x.ToString(CultureInfo.InvariantCulture))) + "]";
     }
 
     private string ToJsonArray(IEnumerable<double?> items)
     {
-        return "[" + string.Join(", ", items.Select(x => x?.ToString() ?? "null")) + "]";
+        return "[" + string.Join(", ", items.Select(x => x?.ToString(CultureInfo.InvariantCulture) ?? "null")) + "]";
     }
 
     private string ToJsonString(string text)
@@ -1022,5 +1025,22 @@ public class HtmlRenderer : IRenderer
             .Replace("\n", "\\n")
             .Replace("\r", "\\r")
             .Replace("\t", "\\t") + "\"";
+    }
+
+    private string FormatValue(object? value)
+    {
+        if (value == null) return "";
+
+        return value switch
+        {
+            double d => d.ToString(_currentCulture),
+            float f => f.ToString(_currentCulture),
+            decimal m => m.ToString(_currentCulture),
+            DateTime dt => dt.ToString(_currentCulture),
+            DateOnly d => d.ToString(_currentCulture),
+            DateTimeOffset dto => dto.ToString(_currentCulture),
+            IFormattable formattable => formattable.ToString(null, _currentCulture),
+            _ => value.ToString() ?? ""
+        };
     }
 }

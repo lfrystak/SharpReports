@@ -10,6 +10,7 @@ var report = ReportBuilder.WithTitle("Report Title")
     .AddSection("Section Name", section => { })
     .WithFooter("Footer text")
     .WithLogo("logo-url")
+    .WithCulture("en-US")  // Optional: specify locale for formatting
     .GenerateHtml();
 ```
 
@@ -254,18 +255,49 @@ Theme properties:
 - **EnableAnimations**: Enable/disable hover and transition effects
 - **EnableGradients**: Enable/disable gradient backgrounds on elements
 
+## Culture / Locale
+
+By default, all numbers and dates use `InvariantCulture` for consistent, locale-independent output. This ensures reports render identically regardless of the system's locale settings.
+
+```csharp
+// Default: InvariantCulture (locale-independent)
+ReportBuilder.WithTitle("Report")
+    .AddSection("Data", s => s
+        .AddNumberTile("Value", 1234.56, "N2"))  // → 1,234.56
+    .Build();
+
+// Specify a culture by name
+ReportBuilder.WithTitle("Bericht")
+    .WithCulture("de-DE")
+    .AddSection("Daten", s => s
+        .AddNumberTile("Wert", 1234.56, "N2")    // → 1.234,56
+        .AddDateTile("Datum", DateTime.Now))     // → 31.01.2026
+    .Build();
+
+// Or use CultureInfo directly
+using System.Globalization;
+
+ReportBuilder.WithTitle("Report")
+    .WithCulture(CultureInfo.CurrentCulture)
+    .Build();
+```
+
+**Note:** Chart data (JavaScript arrays) always uses `InvariantCulture` regardless of the report's culture setting, as JavaScript requires `.` as the decimal separator.
+
 ## Number Format Strings
 
-| Format | Example Input | Output |
+| Format | Example Input | Output (InvariantCulture) |
 |--------|--------------|--------|
-| `"C0"` | 1234.56 | $1,235 |
-| `"C2"` | 1234.56 | $1,234.56 |
+| `"C0"` | 1234.56 | ¤1,235 |
+| `"C2"` | 1234.56 | ¤1,234.56 |
 | `"N0"` | 1234.56 | 1,235 |
 | `"N2"` | 1234.56 | 1,234.56 |
 | `"P0"` | 0.1234 | 12% |
 | `"P1"` | 0.1234 | 12.3% |
 | `"P2"` | 0.1234 | 12.34% |
 | `"F2"` | 1234.56 | 1234.56 |
+
+**Note:** Currency symbol (¤) varies by culture. Use `WithCulture("en-US")` for `$`, `WithCulture("de-DE")` for `€`, etc.
 
 ## Complete Example
 

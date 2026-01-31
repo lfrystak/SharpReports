@@ -1,4 +1,4 @@
-using SharpReports.Core;
+﻿using SharpReports.Core;
 using SharpReports.Extensions;
 using SharpReports.Rendering;
 
@@ -50,6 +50,7 @@ Console.WriteLine("Building report...");
 // Build the report using the fluent API
 var report = ReportBuilder.WithTitle("Q2 2024 Business Performance Report")
     .WithLogo("https://via.placeholder.com/150x50/2563eb/ffffff?text=MyCompany")
+    .WithCulture("en-US")
     .AddSection("Key Metrics", section => section
         .SetColumns(4)
         .AddNumberTile("Total Revenue", 432000, "C0", tooltip: "Total revenue from all regions and product lines for Q2 2024")

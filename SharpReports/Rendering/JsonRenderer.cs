@@ -1,4 +1,4 @@
-using System.Text;
+using System.Globalization;
 using System.Text.Json;
 using SharpReports.Core;
 using SharpReports.Elements;
@@ -17,8 +17,11 @@ public class JsonRenderer : IRenderer
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
+    private CultureInfo _currentCulture = CultureInfo.InvariantCulture;
+
     public string Render(Report report, Theme? theme = null)
     {
+        _currentCulture = report.Culture;
         var reportData = new
         {
             title = report.Title,
@@ -48,7 +51,7 @@ public class JsonRenderer : IRenderer
                 value = tile.Value,
                 format = tile.Format,
                 subtitle = tile.Subtitle,
-                formattedValue = tile.GetFormattedValue()
+                formattedValue = tile.GetFormattedValue(_currentCulture)
             },
             DateTile dateTile => new
             {
@@ -59,7 +62,7 @@ public class JsonRenderer : IRenderer
                 dateOnlyValue = dateTile.DateOnlyValue?.ToDateTime(TimeOnly.MinValue),
                 format = dateTile.Format,
                 subtitle = dateTile.Subtitle,
-                formattedValue = dateTile.GetFormattedValue()
+                formattedValue = dateTile.GetFormattedValue(_currentCulture)
             },
             FreeText text => new
             {

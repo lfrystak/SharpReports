@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace SharpReports.Elements;
 
 /// <summary>
@@ -58,17 +60,30 @@ public class DateTile : ReportElementBase
     }
 
     /// <summary>
-    /// Gets the formatted value string
+    /// Gets the formatted value string using InvariantCulture
     /// </summary>
     public string GetFormattedValue()
     {
+        return GetFormattedValue(CultureInfo.InvariantCulture);
+    }
+
+    /// <summary>
+    /// Gets the formatted value string using the specified culture
+    /// </summary>
+    /// <param name="culture">The culture to use for formatting</param>
+    public string GetFormattedValue(CultureInfo culture)
+    {
         if (DateTimeValue.HasValue)
         {
-            return Format != null ? DateTimeValue.Value.ToString(Format) : DateTimeValue.Value.ToString("g");
+            return Format != null
+                ? DateTimeValue.Value.ToString(Format, culture)
+                : DateTimeValue.Value.ToString("g", culture);
         }
         else if (DateOnlyValue.HasValue)
         {
-            return Format != null ? DateOnlyValue.Value.ToString(Format) : DateOnlyValue.Value.ToString("d");
+            return Format != null
+                ? DateOnlyValue.Value.ToString(Format, culture)
+                : DateOnlyValue.Value.ToString("d", culture);
         }
         return string.Empty;
     }

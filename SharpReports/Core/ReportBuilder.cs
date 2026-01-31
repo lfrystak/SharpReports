@@ -1,3 +1,4 @@
+using System.Globalization;
 using SharpReports.Rendering;
 
 namespace SharpReports.Core;
@@ -57,6 +58,28 @@ public class ReportBuilder
     public ReportBuilder WithLogo(string logoUrl)
     {
         _report.LogoUrl = logoUrl;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the culture used for formatting numbers and dates.
+    /// If not specified, InvariantCulture is used for consistent, locale-independent output.
+    /// </summary>
+    /// <param name="culture">The culture to use for formatting</param>
+    public ReportBuilder WithCulture(CultureInfo culture)
+    {
+        _report.Culture = culture ?? throw new ArgumentNullException(nameof(culture));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the culture used for formatting numbers and dates by name (e.g., "en-US", "de-DE", "fr-FR").
+    /// If not specified, InvariantCulture is used for consistent, locale-independent output.
+    /// </summary>
+    /// <param name="cultureName">The culture name (e.g., "en-US", "de-DE")</param>
+    public ReportBuilder WithCulture(string cultureName)
+    {
+        _report.Culture = CultureInfo.GetCultureInfo(cultureName ?? throw new ArgumentNullException(nameof(cultureName)));
         return this;
     }
 
